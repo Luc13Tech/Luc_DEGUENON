@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LandBeninAI - Plateforme Foncière Intelligente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e584c;
+            --secondary-color: #4c9688;
+            --accent-color: #f0c040;
+            --light-color: #f8f8f8;
+            --dark-color: #333;
+            --benin-green: #008751;
+            --benin-yellow: #fcd116;
+            --benin-red: #e8112d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--benin-green), var(--benin-yellow), var(--benin-red));
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_Benin.svg/1200px-Flag_of_Benin.svg.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 1rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin: 0 auto 2rem;
+            max-width: 700px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.9rem 1.8rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #e0b030;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .features h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--benin-green), var(--benin-yellow), var(--benin-red));
+            border-radius: 2px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            border-top: 5px solid var(--secondary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--benin-green), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .demo-section {
+            background: linear-gradient(to right, #f5f5f5, #eef2f7);
+            padding: 5rem 1rem;
+        }
+        
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-container h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .chatbot {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: var(--dark-color);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+        
+        .chat-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        
+        .chat-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .language-selector {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user-message {
+            background: linear-gradient(135deg, var(--benin-green), var(--secondary-color));
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        
+        .bot-message {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .chat-input button {
+            background: linear-gradient(135deg, var(--benin-green), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+        
+        .criteria {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 1rem;
+        }
+        
+        .criteria h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+        
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .criterion {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .criterion:hover {
+            transform: translateY(-5px);
+        }
+        
+        .criterion h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .criterion h3 i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .criterion .percentage {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .data-section {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 1rem;
+        }
+        
+        .data-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+        
+        .json-viewer {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 2rem;
+        }
+        
+        .json-viewer .key {
+            color: #f92672;
+        }
+        
+        .json-viewer .string {
+            color: #a6e22e;
+        }
+        
+        .json-viewer .number {
+            color: #ae81ff;
+        }
+        
+        .json-viewer .boolean {
+            color: #ae81ff;
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--benin-green), var(--primary-color));
+            color: white;
+            padding: 3rem 1rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-section p, .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .feature-grid, .criteria-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(to right, var(--benin-green), var(--primary-color));
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_Benin.svg/320px-Flag_of_Benin.svg.png" alt="Drapeau du Bénin">
+                <span>LandBeninAI</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#demo">Démonstration</a></li>
+                <li><a href="#criteria">Critères</a></li>
+                <li><a href="#data">Données</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Révolutionnez la gestion foncière au Bénin avec l'IA</h1>
+            <p>LandBeninAI combine intelligence artificielle et blockchain pour sécuriser les transactions foncières et prévenir les litiges</p>
+            <a href="#demo" class="btn">Essayer la démo</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Nos Fonctionnalités Principales</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3>IA pour détection de litiges</h3>
+                <p>Notre intelligence artificielle analyse les données historiques pour identifier les risques de litiges fonciers et suggérer des solutions préventives.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-search"></i></div>
+                <h3>Vérification de litiges fonciers</h3>
+                <p>Vérifiez instantanément l'existence de litiges sur n'importe quelle parcelle de terrain grâce à notre base de données complète.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-link"></i></div>
+                <h3>Blockchain sécurisée</h3>
+                <p>Tous vos documents fonciers sont enregistrés sur une blockchain immutable pour une sécurité et une transparence maximales.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <h3>Chatbot multilingue</h3>
+                <p>Notre assistant virtuel est disponible 24h/24 en français, anglais et langues locales pour répondre à toutes vos questions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section" id="demo">
+        <div class="demo-container">
+            <h2>Essayez notre chatbot</h2>
+            <div class="chatbot">
+                <div class="chat-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4711/4711986.png" alt="Assistant IA">
+                    <h3>Assistant LandBeninAI</h3>
+                    <div class="language-selector">
+                        <select id="language-select">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">Bonjour! Je suis l'assistant LandBeninAI. Comment puis-je vous aider aujourd'hui?</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Posez votre question...">
+                    <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="criteria" id="criteria">
+        <h2>Critères d'Évaluation</h2>
+        <div class="criteria-grid">
+            <div class="criterion">
+                <h3><i class="fas fa-lightbulb"></i> Innovation Technologique <span class="percentage">25%</span></h3>
+                <p>Originalité de l'intégration blockchain-IA, robustesse et scalabilité de l'architecture, utilisation avancée du TLN pour le support multilingue.</p>
+            </div>
+            
+            <div class="criterion">
+                <h3><i class="fas fa-chart-line"></i> Impact Social et Économique <span class="percentage">30%</span></h3>
+                <p>Potentiel de réduction des litiges et des spoliations, amélioration de l'accès à la propriété et au crédit, contribution à l'inclusion numérique et juridique.</p>
+            </div>
+            
+            <div class="criterion">
+                <h3><i class="fas fa-cogs"></i> Faisabilité et Viabilité <span class="percentage">25%</span></h3>
+                <p>Réalisme technique et financier du prototype, potentiel de déploiement progressif, modèle de partenariat avec les institutions existantes.</p>
+            </div>
+            
+            <div class="criterion">
+                <h3><i class="fas fa-globe-africa"></i> Adaptation au Contexte Béninois <span class="percentage">20%</span></h3>
+                <p>Prise en compte des spécificités juridiques et coutumières, accessibilité technologique (faible connectivité, langues locales), facilité d'adoption par les populations cibles.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="data-section" id="data">
+        <h2>Données du Projet</h2>
+        <div class="json-viewer" id="json-viewer">
+            <!-- Le contenu JSON sera affiché ici -->
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos de LandBeninAI</h3>
+                <p>LandBeninAI est une plateforme innovante qui utilise l'intelligence artificielle et la blockchain pour moderniser et sécuriser le système foncier au Bénin.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <ul>
+                    <li><a href="#features">Fonctionnalités</a></li>
+                    <li><a href="#demo">Démonstration</a></li>
+                    <li><a href="#criteria">Critères d'évaluation</a></li>
+                    <li><a href="#data">Données</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contactez-nous</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Cotonou, Bénin</p>
+                <p><i class="fas fa-phone"></i> +229 XX XX XX XX</p>
+                <p><i class="fas fa-envelope"></i> contact@landbeninai.bj</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 LandBeninAI - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Données JSON intégrées directement dans le code
+        const landBeninData = {
+            "projet": {
+                "nom": "LandBeninAI",
+                "description": "Plateforme de gestion foncière intelligente utilisant l'IA et la blockchain",
+                "version": "1.0.0",
+                "auteur": "Équipe LandBeninAI"
+            },
+            "fonctionnalites": [
+                {
+                    "id": 1,
+                    "nom": "Détection IA de litiges",
+                    "description": "Système intelligent de détection des risques de litiges fonciers",
+                    "statut": "active"
+                },
+                {
+                    "id": 2,
+                    "nom": "Vérification de litiges",
+                    "description": "Consultation en temps réel des litiges existants",
+                    "statut": "active"
+                },
+                {
+                    "id": 3,
+                    "nom": "Blockchain documents",
+                    "description": "Sécurisation des documents fonciers via blockchain",
+                    "statut": "active"
+                },
+                {
+                    "id": 4,
+                    "nom": "Chatbot multilingue",
+                    "description": "Assistant virtuel en français, anglais et langues locales",
+                    "statut": "active"
+                }
+            ],
+            "critèresEvaluation": {
+                "innovationTechnologique": {
+                    "pourcentage": 25,
+                    "details": [
+                        "Originalité de l'intégration blockchain-IA",
+                        "Robustesse et scalabilité de l'architecture",
+                        "Utilisation avancée du TLN pour le support multilingue"
+                    ]
+                },
+                "impactSocialEconomique": {
+                    "pourcentage": 30,
+                    "details": [
+                        "Potentiel de réduction des litiges et des spoliations",
+                        "Amélioration de l'accès à la propriété et au crédit",
+                        "Contribution à l'inclusion numérique et juridique"
+                    ]
+                },
+                "faisabiliteViabilite": {
+                    "pourcentage": 25,
+                    "details": [
+                        "Réalisme technique et financier du prototype",
+                        "Potentiel de déploiement progressif",
+                        "Modèle de partenariat avec les institutions existantes"
+                    ]
+                },
+                "adaptationContexteBeninois": {
+                    "pourcentage": 20,
+                    "details": [
+                        "Prise en compte des spécificités juridiques et coutumières",
+                        "Accessibilité technologique (faible connectivité, langues locales)",
+                        "Facilité d'adoption par les populations cibles"
+                    ]
+                }
+            },
+            "blockchain": {
+                "nombreBlocs": 3,
+                "dernierHash": "HASH_2_2023-08-25_47_HASH_0..0",
+                "documentsSecurises": [
+                    "Titre foncier: Parcelle L12345 - Propriétaire: Jean Doe",
+                    "Acte de vente: Parcelle L67890 - Vendeur: Marie Dupont",
+                    "Test document: Certificat de propriété L54321"
+                ]
+            },
+            "contacts": {
+                "adresse": "Cotonou, Bénin",
+                "telephone": "+229 XX XX XX XX",
+                "email": "contact@landbeninai.bj",
+                "reseauxSociaux": {
+                    "facebook": "https://facebook.com/landbeninai",
+                    "twitter": "https://twitter.com/landbeninai",
+                    "linkedin": "https://linkedin.com/company/landbeninai"
+                }
+            }
+        };
+
+        // Fonction pour afficher le JSON de manière stylisée
+        function displayJSON(data, element) {
+            function createHTML(obj) {
+                let html = '';
+                if (typeof obj === 'object') {
+                    if (Array.isArray(obj)) {
+                        html += '<div>[<ul style="list-style-type: none; padding-left: 20px;">';
+                        obj.forEach(item => {
+                            html += `<li>${createHTML(item)},</li>`;
+                        });
+                        html += '</ul>]</div>';
+                    } else {
+                        html += '<div>{<ul style="list-style-type: none; padding-left: 20px;">';
+                        for (const key in obj) {
+                            html += `<li><span class="key">"${key}"</span>: ${createHTML(obj[key])},</li>`;
+                        }
+                        html += '</ul>}</div>';
+                    }
+                } else if (typeof obj === 'string') {
+                    html += `<span class="string">"${obj}"</span>`;
+                } else if (typeof obj === 'number') {
+                    html += `<span class="number">${obj}</span>`;
+                } else if (typeof obj === 'boolean') {
+                    html += `<span class="boolean">${obj}</span>`;
+                }
+                return html;
+            }
+            
+            element.innerHTML = createHTML(data);
+        }
+
+        // Gestion du menu mobile
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Simulation de l'IA de détection de litiges
+        function detectDispute(landData) {
+            const riskFactors = [];
+            
+            if (!landData.ownershipHistory || landData.ownershipHistory.length < 2) {
+                riskFactors.push("Historique de propriété incomplet");
+            }
+            
+            if (landData.boundaryIssues) {
+                riskFactors.push("Problèmes de délimitation détectés");
+            }
+            
+            if (landData.legalDocuments && landData.legalDocuments.length < 3) {
+                riskFactors.push("Documents légaux insuffisants");
+            }
+            
+            return {
+                riskScore: riskFactors.length * 25,
+                riskFactors: riskFactors,
+                recommendation: riskFactors.length > 0 ? 
+                    "Consulter un expert pour vérification approfondie" : 
+                    "Risque de litige faible"
+            };
+        }
+
+        // Simulation de la vérification de litiges
+        function checkLandDispute(landId) {
+            const disputes = {
+                "L12345": { exists: true, details: "Litige de bornage avec propriété voisine" },
+                "L67890": { exists: false, details: "Aucun litige enregistré" }
+            };
+            
+            return disputes[landId] || { exists: false, details: "Aucun litige enregistré" };
+        }
+
+        // Simulation Blockchain
+        class SimpleBlockchain {
+            constructor() {
+                this.chain = [];
+                this.createGenesisBlock();
+            }
+            
+            createGenesisBlock() {
+                this.chain.push({
+                    index: 0,
+                    timestamp: new Date().toISOString(),
+                    data: "Bloc genesis LandBeninAI",
+                    previousHash: "0",
+                    hash: this.calculateHash(0, new Date().toISOString(), "Bloc genesis LandBeninAI", "0")
+                });
+            }
+            
+            calculateHash(index, timestamp, data, previousHash) {
+                return `HASH_${index}_${timestamp.slice(0,10)}_${data.length}_${previousHash.slice(-4)}`;
+            }
+            
+            addBlock(data) {
+                const previousBlock = this.chain[this.chain.length - 1];
+                const newIndex = previousBlock.index + 1;
+                const newTimestamp = new Date().toISOString();
+                const newHash = this.calculateHash(newIndex, newTimestamp, data, previousBlock.hash);
+                
+                this.chain.push({
+                    index: newIndex,
+                    timestamp: newTimestamp,
+                    data: data,
+                    previousHash: previousBlock.hash,
+                    hash: newHash
+                });
+                
+                return newHash;
+            }
+            
+            verifyDocument(hash) {
+                return this.chain.some(block => block.hash === hash);
+            }
+        }
+
+        // Chatbot multilingue
+        const chatbotResponses = {
+            "fr": {
+                "bonjour": "Bonjour! Comment puis-je vous aider avec vos questions foncières?",
+                "litige": "Pour vérifier un litige, veuillez fournir le numéro d'identification du terrain.",
+                "document": "Nous sécurisons vos documents via blockchain. Quel document vous intéresse?",
+                "blockchain": "Notre système blockchain garantit l'immuabilité et la traçabilité de tous les documents fonciers.",
+                "aide": "Je peux vous aider avec: la vérification de litiges, la sécurité des documents, et répondre à vos questions.",
+                "default": "Désolé, je n'ai pas compris. Tapez 'aide' pour voir ce que je peux faire."
+            },
+            "en": {
+                "hello": "Hello! How can I help you with land issues today?",
+                "dispute": "To check a dispute, please provide the land identification number.",
+                "document": "We secure your documents via blockchain. Which document are you interested in?",
+                "blockchain": "Our blockchain system guarantees the immutability and traceability of all land documents.",
+                "help": "I can help you with: dispute checking, document security, and answering your questions.",
+                "default": "Sorry, I didn't understand that. Type 'help' to see what I can do."
+            }
+        };
+
+        // Initialisation de la blockchain
+        const landBlockchain = new SimpleBlockchain();
+        
+        // Ajout de quelques blocs de démonstration
+        landBlockchain.addBlock("Titre foncier: Parcelle L12345 - Propriétaire: Jean Doe");
+        landBlockchain.addBlock("Acte de vente: Parcelle L67890 - Vendeur: Marie Dupont");
+        
+        // Gestion du chatbot
+        document.getElementById('send-btn').addEventListener('click', handleChatbotInput);
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleChatbotInput();
+            }
+        });
+        
+        function handleChatbotInput() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+            
+            const chatMessages = document.getElementById('chat-messages');
+            const userMessageElem = document.createElement('div');
+            userMessageElem.classList.add('message', 'user-message');
+            userMessageElem.textContent = userInput;
+            chatMessages.appendChild(userMessageElem);
+            
+            const language = document.getElementById('language-select').value;
+            
+            let response = chatbotResponses[language].default;
+            const lowerInput = userInput.toLowerCase();
+            
+            if (language === "fr") {
+                if (lowerInput.includes("bonjour") || lowerInput.includes("salut")) response = chatbotResponses.fr.bonjour;
+                else if (lowerInput.includes("litige")) response = chatbotResponses.fr.litige;
+                else if (lowerInput.includes("document")) response = chatbotResponses.fr.document;
+                else if (lowerInput.includes("blockchain")) response = chatbotResponses.fr.blockchain;
+                else if (lowerInput.includes("aide")) response = chatbotResponses.fr.aide;
+            } else {
+                if (lowerInput.includes("hello") || lowerInput.includes("hi")) response = chatbotResponses.en.hello;
+                else if (lowerInput.includes("dispute")) response = chatbotResponses.en.dispute;
+                else if (lowerInput.includes("document")) response = chatbotResponses.en.document;
+                else if (lowerInput.includes("blockchain")) response = chatbotResponses.en.blockchain;
+                else if (lowerInput.includes("help")) response = chatbotResponses.en.help;
+            }
+            
+            setTimeout(() => {
+                const botMessageElem = document.createElement('div');
+                botMessageElem.classList.add('message', 'bot-message');
+                botMessageElem.textContent = response;
+                chatMessages.appendChild(botMessageElem);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 800);
+            
+            document.getElementById('user-input').value = '';
+        }
+        
+        // Afficher les données JSON
+        document.addEventListener('DOMContentLoaded', function() {
+            const jsonViewer = document.getElementById('json-viewer');
+            displayJSON(landBeninData, jsonViewer);
+            
+            // Démonstration des fonctionnalités en arrière-plan
+            console.log("=== DÉMONSTRATION DES FONCTIONNALITÉS LANDBENINAI ===");
+            
+            // Test de détection de litiges
+            const sampleLandData = {
+                ownershipHistory: ["Jean Dupont"],
+                boundaryIssues: true,
+                legalDocuments: ["titre de propriété"]
+            };
+            
+            const disputeAnalysis = detectDispute(sampleLandData);
+            console.log("Analyse des risques de litige:", disputeAnalysis);
+            
+            // Test de vérification de litige
+            const landCheck = checkLandDispute("L12345");
+            console.log("Vérification de litige pour L12345:", landCheck);
+            
+            // Test Blockchain
+            const newHash = landBlockchain.addBlock("Test document: Certificat de propriété L54321");
+            console.log("Document enregistré dans la blockchain avec le hash:", newHash);
+            console.log("Vérification du document:", landBlockchain.verifyDocument(newHash));
+        });
+    </script>
+</body>
+</html>
