@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LandBeninAI - Plateforme Foncière Intelligente</title>
+    <style>
+        :root {
+            --primary-color: #2e584c;
+            --secondary-color: #4c9688;
+            --accent-color: #f0c040;
+            --light-color: #f8f8f8;
+            --dark-color: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(46, 88, 76, 0.8), rgba(46, 88, 76, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232e584c"/></svg>');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #e0b030;
+        }
+        
+        .features {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .demo-section {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 1rem;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .demo-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .chatbot {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: var(--dark-color);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        
+        .message {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+        
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            margin-left: 20%;
+        }
+        
+        .bot-message {
+            background-color: #e0e0e0;
+            margin-right: 20%;
+        }
+        
+        .chat-input {
+            display: flex;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .chat-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">LandBeninAI</div>
+            <ul class="nav-links">
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#demo">Démonstration</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Révolutionnez la gestion foncière au Bénin avec l'IA</h1>
+        <p>LandBeninAI combine intelligence artificielle et blockchain pour sécuriser les transactions foncières et prévenir les litiges</p>
+        <a href="#demo" class="btn">Essayer la démo</a>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Nos Fonctionnalités Principales</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>IA pour détection de litiges</h3>
+                <p>Notre intelligence artificielle analyse les données historiques pour identifier les risques de litiges fonciers et suggérer des solutions préventives.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Vérification de litiges fonciers</h3>
+                <p>Vérifiez instantanément l'existence de litiges sur n'importe quelle parcelle de terrain grâce à notre base de données complète.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Blockchain sécurisée</h3>
+                <p>Tous vos documents fonciers sont enregistrés sur une blockchain immutable pour une sécurité et une transparence maximales.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Chatbot multilingue</h3>
+                <p>Notre assistant virtuel est disponible 24h/24 en français, anglais et langues locales pour répondre à toutes vos questions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section" id="demo">
+        <div class="demo-container">
+            <h2>Essayez notre chatbot</h2>
+            <div class="chatbot">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">Bonjour! Je suis l'assistant LandBeninAI. Comment puis-je vous aider aujourd'hui?</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Posez votre question...">
+                    <button id="send-btn">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 LandBeninAI - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Simulation de l'IA de détection de litiges
+        function detectDispute(landData) {
+            // En situation réelle, on utiliserait un modèle d'IA entraîné
+            const riskFactors = [];
+            
+            if (!landData.ownershipHistory || landData.ownershipHistory.length < 2) {
+                riskFactors.push("Historique de propriété incomplet");
+            }
+            
+            if (landData.boundaryIssues) {
+                riskFactors.push("Problèmes de délimitation détectés");
+            }
+            
+            if (landData.legalDocuments && landData.legalDocuments.length < 3) {
+                riskFactors.push("Documents légaux insuffisants");
+            }
+            
+            return {
+                riskScore: riskFactors.length * 25,
+                riskFactors: riskFactors,
+                recommendation: riskFactors.length > 0 ? 
+                    "Consulter un expert pour vérification approfondie" : 
+                    "Risque de litige faible"
+            };
+        }
+
+        // Simulation de la vérification de litiges
+        function checkLandDispute(landId) {
+            // En situation réelle, on interrogerait une base de données
+            const disputes = {
+                "L12345": { exists: true, details: "Litige de bornage avec propriété voisine" },
+                "L67890": { exists: false, details: "Aucun litige enregistré" }
+            };
+            
+            return disputes[landId] || { exists: false, details: "Aucun litige enregistré" };
+        }
+
+        // Simulation Blockchain
+        class SimpleBlockchain {
+            constructor() {
+                this.chain = [];
+                this.createGenesisBlock();
+            }
+            
+            createGenesisBlock() {
+                this.chain.push({
+                    index: 0,
+                    timestamp: new Date().toISOString(),
+                    data: "Bloc genesis LandBeninAI",
+                    previousHash: "0",
+                    hash: this.calculateHash(0, new Date().toISOString(), "Bloc genesis LandBeninAI", "0")
+                });
+            }
+            
+            calculateHash(index, timestamp, data, previousHash) {
+                // Simulation simplifiée de hash
+                return `HASH_${index}_${timestamp.slice(0,10)}_${data.length}_${previousHash.slice(-4)}`;
+            }
+            
+            addBlock(data) {
+                const previousBlock = this.chain[this.chain.length - 1];
+                const newIndex = previousBlock.index + 1;
+                const newTimestamp = new Date().toISOString();
+                const newHash = this.calculateHash(newIndex, newTimestamp, data, previousBlock.hash);
+                
+                this.chain.push({
+                    index: newIndex,
+                    timestamp: newTimestamp,
+                    data: data,
+                    previousHash: previousBlock.hash,
+                    hash: newHash
+                });
+                
+                return newHash;
+            }
+            
+            verifyDocument(hash) {
+                return this.chain.some(block => block.hash === hash);
+            }
+        }
+
+        // Chatbot multilingue
+        const chatbotResponses = {
+            "français": {
+                "bonjour": "Bonjour! Comment puis-je vous aider avec vos questions foncières?",
+                "litige": "Pour vérifier un litige, veuillez fournir le numéro d'identification du terrain.",
+                "document": "Nous sécurisons vos documents via blockchain. Quel document vous intéresse?",
+                "aide": "Je peux vous aider avec: la vérification de litiges, la sécurité des documents, et répondre à vos questions.",
+                "default": "Désolé, je n'ai pas compris. Tapez 'aide' pour voir ce que je peux faire."
+            },
+            "english": {
+                "hello": "Hello! How can I help you with land issues today?",
+                "dispute": "To check a dispute, please provide the land identification number.",
+                "document": "We secure your documents via blockchain. Which document are you interested in?",
+                "help": "I can help you with: dispute checking, document security, and answering your questions.",
+                "default": "Sorry, I didn't understand that. Type 'help' to see what I can do."
+            }
+        };
+
+        // Initialisation de la blockchain
+        const landBlockchain = new SimpleBlockchain();
+        
+        // Ajout de quelques blocs de démonstration
+        landBlockchain.addBlock("Titre foncier: Parcelle L12345 - Propriétaire: Jean Doe");
+        landBlockchain.addBlock("Acte de vente: Parcelle L67890 - Vendeur: Marie Dupont");
+        
+        // Gestion du chatbot
+        document.getElementById('send-btn').addEventListener('click', handleChatbotInput);
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleChatbotInput();
+            }
+        });
+        
+        function handleChatbotInput() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+            
+            // Ajouter le message de l'utilisateur
+            const chatMessages = document.getElementById('chat-messages');
+            const userMessageElem = document.createElement('div');
+            userMessageElem.classList.add('message', 'user-message');
+            userMessageElem.textContent = userInput;
+            chatMessages.appendChild(userMessageElem);
+            
+            // Réponse du chatbot (simplifiée)
+            let response = "Je suis un chatbot de démonstration. Dans la version complète, je pourrais répondre à vos questions.";
+            
+            // Détection de langue basique
+            const lowerInput = userInput.toLowerCase();
+            let language = "français";
+            
+            if (lowerInput.includes("hello") || lowerInput.includes("hi ")) {
+                language = "english";
+            }
+            
+            // Réponses simples
+            if (language === "français") {
+                if (lowerInput.includes("bonjour")) response = chatbotResponses.français.bonjour;
+                else if (lowerInput.includes("litige")) response = chatbotResponses.français.litige;
+                else if (lowerInput.includes("document")) response = chatbotResponses.français.document;
+                else if (lowerInput.includes("aide")) response = chatbotResponses.français.aide;
+                else response = chatbotResponses.français.default;
+            } else {
+                if (lowerInput.includes("hello")) response = chatbotResponses.english.hello;
+                else if (lowerInput.includes("dispute")) response = chatbotResponses.english.dispute;
+                else if (lowerInput.includes("document")) response = chatbotResponses.english.document;
+                else if (lowerInput.includes("help")) response = chatbotResponses.english.help;
+                else response = chatbotResponses.english.default;
+            }
+            
+            // Ajouter la réponse avec un léger délai
+            setTimeout(() => {
+                const botMessageElem = document.createElement('div');
+                botMessageElem.classList.add('message', 'bot-message');
+                botMessageElem.textContent = response;
+                chatMessages.appendChild(botMessageElem);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 500);
+            
+            // Effacer l'input
+            document.getElementById('user-input').value = '';
+        }
+        
+        // Démonstration des fonctionnalités en arrière-plan
+        console.log("=== DÉMONSTRATION DES FONCTIONNALITÉS LANDBENINAI ===");
+        
+        // Test de détection de litiges
+        const sampleLandData = {
+            ownershipHistory: ["Jean Dupont"],
+            boundaryIssues: true,
+            legalDocuments: ["titre de propriété"]
+        };
+        
+        const disputeAnalysis = detectDispute(sampleLandData);
+        console.log("Analyse des risques de litige:", disputeAnalysis);
+        
+        // Test de vérification de litige
+        const landCheck = checkLandDispute("L12345");
+        console.log("Vérification de litige pour L12345:", landCheck);
+        
+        // Test Blockchain
+        const newHash = landBlockchain.addBlock("Test document: Certificat de propriété L54321");
+        console.log("Document enregistré dans la blockchain avec le hash:", newHash);
+        console.log("Vérification du document:", landBlockchain.verifyDocument(newHash));
+    </script>
+</body>
+</html>
