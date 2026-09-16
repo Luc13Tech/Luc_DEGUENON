@@ -5,6 +5,7 @@ import { I18nextProvider } from "react-i18next";
 
 import App from "./App";
 import i18n from "./i18n";
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
