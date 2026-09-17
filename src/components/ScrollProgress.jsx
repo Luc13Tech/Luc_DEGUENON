@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+
 import useScrollProgress from "../hooks/useScrollProgress";
+
+import "./ScrollProgress.css";
 
 export default function ScrollProgress() {
   const progress = useScrollProgress();
