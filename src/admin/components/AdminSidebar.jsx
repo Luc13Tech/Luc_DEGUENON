@@ -8,88 +8,176 @@ import {
   Settings,
   ShieldCheck,
   X,
+  LogOut,
+  ExternalLink,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const menuItems = [
-  {
-    to: "/admin",
-    label: "Tableau de bord",
-    icon: LayoutDashboard,
-    end: true,
-  },
-  {
-    to: "/admin/projects",
-    label: "Projets",
-    icon: FolderKanban,
-  },
-  {
-    to: "/admin/services",
-    label: "Services",
-    icon: BriefcaseBusiness,
-  },
-  {
-    to: "/admin/skills",
-    label: "Compétences",
-    icon: Code2,
-  },
-  {
-    to: "/admin/media",
-    label: "Médias",
-    icon: Images,
-  },
-  {
-    to: "/admin/settings",
-    label: "Paramètres",
-    icon: Settings,
-  },
-  {
-    to: "/admin/audit",
-    label: "Sécurité & Audit",
-    icon: ShieldCheck,
-  },
-];
+import "./AdminSidebar.css";
 
-export default function AdminSidebar({ open = false, onClose }) {
+export default function AdminSidebar({
+  isOpen = false,
+  onClose,
+  onLogout,
+  user,
+}) {
+  const { t } = useTranslation();
+
+  const links = [
+    {
+      to: "/admin",
+      label: t("admin.dashboard"),
+      icon: LayoutDashboard,
+      end: true,
+    },
+    {
+      to: "/admin/projects",
+      label: t("admin.projects"),
+      icon: FolderKanban,
+    },
+    {
+      to: "/admin/services",
+      label: t("admin.services"),
+      icon: BriefcaseBusiness,
+    },
+    {
+      to: "/admin/skills",
+      label: t("admin.skills"),
+      icon: Code2,
+    },
+    {
+      to: "/admin/media",
+      label: t("admin.media"),
+      icon: Images,
+    },
+    {
+      to: "/admin/settings",
+      label: t("admin.settings"),
+      icon: Settings,
+    },
+    {
+      to: "/admin/audit",
+      label: t("admin.security"),
+      icon: ShieldCheck,
+    },
+  ];
+
   return (
-    <aside className={`admin-sidebar ${open ? "admin-sidebar--open" : ""}`}>
+    <aside
+      className={`admin-sidebar${
+        isOpen ? " admin-sidebar--open" : ""
+      }`}
+      aria-label="Navigation administration"
+    >
       <div className="admin-sidebar__header">
         <div>
-          <span className="admin-sidebar__eyebrow">ADMINISTRATION</span>
-          <strong className="admin-sidebar__title">Luc DEGUENON</strong>
+          <span className="admin-sidebar__eyebrow">
+            ADMINISTRATION
+          </span>
+
+          <span className="admin-sidebar__title">
+            Luc DEGUENON
+          </span>
         </div>
 
-        <button
-          type="button"
-          className="admin-sidebar__close"
-          onClick={onClose}
-          aria-label="Fermer le menu"
-        >
-          <X size={20} />
-        </button>
+        {onClose && (
+          <button
+            type="button"
+            className="admin-sidebar__close"
+            onClick={onClose}
+            aria-label="Fermer le menu"
+          >
+            <X
+              size={20}
+              aria-hidden="true"
+            />
+          </button>
+        )}
       </div>
 
-      <nav className="admin-sidebar__nav" aria-label="Navigation administration">
-        {menuItems.map(({ to, label, icon: Icon, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `admin-sidebar__link ${
-                isActive ? "admin-sidebar__link--active" : ""
-              }`
-            }
-          >
-            <Icon size={19} strokeWidth={1.8} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+      <nav className="admin-sidebar__nav">
+        {links.map(
+          ({
+            to,
+            label,
+            icon: Icon,
+            end,
+          }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `admin-sidebar__link${
+                  isActive
+                    ? " admin-sidebar__link--active"
+                    : ""
+                }`
+              }
+            >
+              <Icon
+                size={19}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+
+              <span>{label}</span>
+            </NavLink>
+          )
+        )}
       </nav>
 
       <div className="admin-sidebar__footer">
-        <span>Portfolio Administration</span>
-        <span>© {new Date().getFullYear()}</span>
+        {user && (
+          <div className="admin-sidebar__user">
+            <strong>
+              {user.name ||
+                user.email ||
+                "Administrateur"}
+            </strong>
+
+            <small>
+              {user.role || "admin"}
+            </small>
+          </div>
+        )}
+
+        <NavLink
+          to="/"
+          className="admin-sidebar__link"
+          onClick={onClose}
+        >
+          <ExternalLink
+            size={18}
+            aria-hidden="true"
+          />
+
+          <span>
+            Voir le portfolio
+          </span>
+        </NavLink>
+
+        {onLogout && (
+          <button
+            type="button"
+            className="admin-sidebar__link"
+            onClick={onLogout}
+          >
+            <LogOut
+              size={18}
+              aria-hidden="true"
+            />
+
+            <span>
+              {t("admin.logout")}
+            </span>
+          </button>
+        )}
+
+        <span>
+          © {new Date().getFullYear()} Luc DEGUENON
+        </span>
       </div>
     </aside>
   );
