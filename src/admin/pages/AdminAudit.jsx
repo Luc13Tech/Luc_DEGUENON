@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   RefreshCw,
   ShieldCheck,
@@ -11,12 +11,14 @@ import SEO from "../../components/SEO";
 
 import { getAuditLogs } from "../services/adminApi";
 
+import "./AdminAudit.css";
+
 export default function AdminAudit() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const loadLogs = async () => {
+  const loadLogs = useCallback(async () => {
     setLoading(true);
     setError("");
 
@@ -25,44 +27,56 @@ export default function AdminAudit() {
         limit: 100,
       });
 
-      setLogs(
+      const receivedLogs =
         Array.isArray(data)
           ? data
           : data?.logs ||
-              data?.auditLogs ||
-              data?.items ||
-              []
+            data?.auditLogs ||
+            data?.items ||
+            [];
+
+      setLogs(
+        Array.isArray(receivedLogs)
+          ? receivedLogs
+          : []
       );
     } catch (err) {
-      setError(
+      const message =
         err?.response?.data?.message ||
-          "Impossible de charger les journaux de sécurité."
+        err?.response?.data?.error;
+
+      setError(
+        typeof message === "string" &&
+          message.trim()
+          ? message.trim()
+          : "Impossible de charger les journaux de sécurité."
       );
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadLogs();
-  }, []);
+  }, [loadLogs]);
 
   const getAction = (log) => {
     return (
       log?.action ||
       log?.event ||
       log?.type ||
+      log?.operation ||
       "Action"
     );
   };
 
   const getStatus = (log) => {
-    const value =
+    return String(
       log?.status ||
-      log?.result ||
-      "";
-
-    return String(value).toLowerCase();
+        log?.result ||
+        log?.outcome ||
+        ""
+    ).toLowerCase();
   };
 
   const isFailure = (log) => {
@@ -72,12 +86,15 @@ export default function AdminAudit() {
       status.includes("fail") ||
       status.includes("error") ||
       status.includes("denied") ||
-      status.includes("failed")
+      status.includes("reject") ||
+      status.includes("invalid")
     );
   };
 
   const formatDate = (value) => {
-    if (!value) return "Date inconnue";
+    if (!value) {
+      return "Date inconnue";
+    }
 
     const date = new Date(value);
 
@@ -95,6 +112,7 @@ export default function AdminAudit() {
     return (
       log?.user?.name ||
       log?.user?.email ||
+      log?.admin?.name ||
       log?.admin?.email ||
       log?.email ||
       log?.username ||
@@ -107,13 +125,33 @@ export default function AdminAudit() {
       log?.ip ||
       log?.ipAddress ||
       log?.clientIp ||
+      log?.requestIp ||
       "Non disponible"
     );
   };
 
+  const formatDetails = (details) => {
+    if (!details) {
+      return "";
+    }
+
+    if (typeof details === "string") {
+      return details;
+    }
+
+    try {
+      return JSON.stringify(details);
+    } catch {
+      return "Détails indisponibles";
+    }
+  };
+
   return (
     <>
-      <SEO title="Journal de sécurité" />
+      <SEO
+        title="Journal de sécurité"
+        description="Journal des activités administratives du portfolio Luc DEGUENON."
+      />
 
       <main className="admin-page">
         <Container>
@@ -121,11 +159,13 @@ export default function AdminAudit() {
             <div>
               <span>ADMINISTRATION</span>
 
-              <h1>Journal de sécurité</h1>
+              <h1>
+                Journal de sécurité
+              </h1>
 
               <p>
-                Consultez les actions enregistrées par le
-                système d'administration.
+                Consultez les actions enregistrées
+                par le système d'administration.
               </p>
             </div>
 
@@ -134,15 +174,38 @@ export default function AdminAudit() {
               className="admin-action"
               onClick={loadLogs}
               disabled={loading}
+              aria-label="Actualiser le journal de sécurité"
             >
-              <RefreshCw size={18} />
-              Actualiser
+              <RefreshCw
+                size={18}
+                className={
+                  loading
+                    ? "admin-audit-spin"
+                    : ""
+                }
+                aria-hidden="true"
+              />
+
+              <span>
+                {loading
+                  ? "Actualisation..."
+                  : "Actualiser"}
+              </span>
             </button>
           </header>
 
-          <section className="admin-security-summary">
-            <div className="admin-security-summary__icon">
-              <ShieldCheck size={28} />
+          <section
+            className="admin-security-summary"
+            aria-label="État de la sécurité"
+          >
+            <div
+              className="admin-security-summary__icon"
+              aria-hidden="true"
+            >
+              <ShieldCheck
+                size={28}
+                strokeWidth={1.8}
+              />
             </div>
 
             <div>
@@ -151,8 +214,9 @@ export default function AdminAudit() {
               </strong>
 
               <p>
-                Les connexions et opérations administratives
-                enregistrées par le backend peuvent être
+                Les connexions et opérations
+                administratives enregistrées
+                par le backend peuvent être
                 consultées ici.
               </p>
             </div>
@@ -162,14 +226,18 @@ export default function AdminAudit() {
             <div
               className="admin-message admin-message--error"
               role="alert"
+              aria-live="assertive"
             >
               {error}
             </div>
           )}
 
-          <section className="admin-list">
+          <section
+            className="admin-list"
+            aria-labelledby="audit-list-title"
+          >
             <div className="admin-list__header">
-              <h2>
+              <h2 id="audit-list-title">
                 Activités récentes
                 {logs.length > 0 &&
                   ` (${logs.length})`}
@@ -177,15 +245,37 @@ export default function AdminAudit() {
             </div>
 
             {loading ? (
-              <p>
-                Chargement du journal de sécurité...
-              </p>
-            ) : logs.length === 0 ? (
-              <div className="admin-audit-empty">
-                <ShieldCheck size={35} />
+              <div
+                className="admin-audit-state"
+                role="status"
+                aria-live="polite"
+              >
+                <RefreshCw
+                  size={25}
+                  className="admin-audit-spin"
+                  aria-hidden="true"
+                />
 
                 <p>
-                  Aucun événement de sécurité disponible.
+                  Chargement du journal de
+                  sécurité...
+                </p>
+              </div>
+            ) : logs.length === 0 ? (
+              <div className="admin-audit-empty">
+                <ShieldCheck
+                  size={35}
+                  strokeWidth={1.6}
+                  aria-hidden="true"
+                />
+
+                <strong>
+                  Aucun événement
+                </strong>
+
+                <p>
+                  Aucun événement de sécurité
+                  n'est actuellement disponible.
                 </p>
               </div>
             ) : (
@@ -197,25 +287,40 @@ export default function AdminAudit() {
                   const id =
                     log?._id ||
                     log?.id ||
-                    index;
+                    `audit-${index}`;
+
+                  const date =
+                    log?.createdAt ||
+                    log?.timestamp ||
+                    log?.date;
+
+                  const details =
+                    formatDetails(
+                      log?.details
+                    );
 
                   return (
                     <article
                       key={id}
-                      className={`admin-audit-item ${
+                      className={`admin-audit-item${
                         failed
-                          ? "admin-audit-item--danger"
+                          ? " admin-audit-item--danger"
                           : ""
                       }`}
                     >
-                      <div className="admin-audit-item__icon">
+                      <div
+                        className="admin-audit-item__icon"
+                        aria-hidden="true"
+                      >
                         {failed ? (
                           <AlertTriangle
                             size={21}
+                            strokeWidth={1.8}
                           />
                         ) : (
                           <CheckCircle
                             size={21}
+                            strokeWidth={1.8}
                           />
                         )}
                       </div>
@@ -226,38 +331,42 @@ export default function AdminAudit() {
                             {getAction(log)}
                           </strong>
 
-                          <time>
-                            {formatDate(
-                              log?.createdAt ||
-                                log?.timestamp ||
-                                log?.date
-                            )}
+                          <time
+                            dateTime={
+                              date
+                                ? new Date(
+                                    date
+                                  ).toISOString()
+                                : undefined
+                            }
+                          >
+                            {formatDate(date)}
                           </time>
                         </div>
 
                         <p>
-                          Utilisateur :{" "}
+                          <strong>
+                            Utilisateur :
+                          </strong>{" "}
                           {getUser(log)}
                         </p>
 
                         <small>
-                          Adresse IP : {getIp(log)}
+                          Adresse IP :{" "}
+                          {getIp(log)}
                         </small>
 
                         {log?.description && (
                           <small>
-                            {log.description}
+                            {String(
+                              log.description
+                            )}
                           </small>
                         )}
 
-                        {log?.details && (
-                          <small>
-                            {typeof log.details ===
-                            "string"
-                              ? log.details
-                              : JSON.stringify(
-                                  log.details
-                                )}
+                        {details && (
+                          <small className="admin-audit-item__details">
+                            {details}
                           </small>
                         )}
                       </div>
