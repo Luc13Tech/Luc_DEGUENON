@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 
-import { adminLogout } from "../services/adminApi";
 import { AdminSidebar } from "../components";
 
 import "./AdminLayout.css";
@@ -16,19 +15,21 @@ export default function AdminLayout({
   const [menuOpen, setMenuOpen] =
     useState(false);
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   const handleLogout = async () => {
     try {
-      await adminLogout();
-    } catch (error) {
-      console.warn(
-        "La déconnexion serveur a échoué :",
-        error
-      );
-    } finally {
       if (onLogout) {
         await onLogout();
       }
-
+    } catch (error) {
+      console.warn(
+        "La déconnexion a rencontré une erreur :",
+        error
+      );
+    } finally {
       setMenuOpen(false);
 
       navigate("/admin/login", {
@@ -37,12 +38,9 @@ export default function AdminLayout({
     }
   };
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
   return (
     <div className="admin-layout">
+      {/* Overlay mobile */}
       <button
         type="button"
         className={`admin-layout__overlay ${
@@ -52,16 +50,20 @@ export default function AdminLayout({
         }`}
         onClick={closeMenu}
         aria-label="Fermer le menu"
+        tabIndex={menuOpen ? 0 : -1}
       />
 
-      <<AdminSidebar
-  isOpen={menuOpen}
-  onClose={closeMenu}
-  onLogout={handleLogout}
-  user={user}
-/>
+      {/* Sidebar */}
+      <AdminSidebar
+        isOpen={menuOpen}
+        onClose={closeMenu}
+        onLogout={handleLogout}
+        user={user}
+      />
 
+      {/* Contenu principal */}
       <div className="admin-layout__content">
+        {/* Header mobile */}
         <header className="admin-mobile-header">
           <button
             type="button"
@@ -83,6 +85,7 @@ export default function AdminLayout({
           </span>
         </header>
 
+        {/* Pages administrateur */}
         <div className="admin-layout__page">
           <Outlet />
         </div>
