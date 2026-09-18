@@ -5,6 +5,8 @@ import { Menu } from "lucide-react";
 import { adminLogout } from "../services/adminApi";
 import { AdminSidebar } from "../components";
 
+import "./AdminLayout.css";
+
 export default function AdminLayout({
   user,
   onLogout,
