@@ -6,6 +6,7 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
+import "./AdminHeader.css";
 
 export default function AdminHeader({
   user,
