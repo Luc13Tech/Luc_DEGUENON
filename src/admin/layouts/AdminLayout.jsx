@@ -54,10 +54,12 @@ export default function AdminLayout({
         aria-label="Fermer le menu"
       />
 
-      <AdminSidebar
-        isOpen={menuOpen}
-        onClose={closeMenu}
-      />
+      <<AdminSidebar
+  isOpen={menuOpen}
+  onClose={closeMenu}
+  onLogout={handleLogout}
+  user={user}
+/>
 
       <div className="admin-layout__content">
         <header className="admin-mobile-header">
