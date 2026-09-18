@@ -7,6 +7,7 @@ import {
   Settings,
   ShieldCheck,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import Container from "../../components/Container";
 import SEO from "../../components/SEO";
@@ -67,57 +68,89 @@ export default function AdminDashboard({
         <Container>
           <motion.header
             className="admin-dashboard__header"
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
           >
-            <span>ADMINISTRATION</span>
+            <span>
+              ADMINISTRATION
+            </span>
 
             <h1>
               Bonjour
-              {user?.name ? `, ${user.name}` : ""}.
+              {user?.name
+                ? `, ${user.name}`
+                : ""}
+              .
             </h1>
 
             <p>
-              Gérez les contenus, réalisations, services,
-              médias et paramètres du portfolio.
+              Gérez les contenus, réalisations,
+              services, médias et paramètres
+              du portfolio.
             </p>
           </motion.header>
 
           <div className="admin-dashboard__grid">
-            {cards.map((card, index) => {
-              const Icon = card.icon;
+            {cards.map(
+              (card, index) => {
+                const Icon = card.icon;
 
-              return (
-                <motion.a
-                  key={card.title}
-                  href={card.to}
-                  className="admin-dashboard__card"
-                  initial={{
-                    opacity: 0,
-                    y: 25,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    delay: index * 0.07,
-                  }}
-                  whileHover={{
-                    y: -5,
-                  }}
-                >
-                  <div className="admin-dashboard__card-icon">
-                    <Icon size={24} />
-                  </div>
+                return (
+                  <motion.div
+                    key={card.to}
+                    initial={{
+                      opacity: 0,
+                      y: 25,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay:
+                        index * 0.07,
+                      duration: 0.4,
+                    }}
+                    whileHover={{
+                      y: -5,
+                    }}
+                  >
+                    <Link
+                      to={card.to}
+                      className="admin-dashboard__card"
+                      aria-label={`Gérer ${card.title}`}
+                    >
+                      <div className="admin-dashboard__card-icon">
+                        <Icon
+                          size={24}
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                      </div>
 
-                  <div>
-                    <strong>{card.value}</strong>
-                    <span>{card.title}</span>
-                  </div>
-                </motion.a>
-              );
-            })}
+                      <div>
+                        <strong>
+                          {card.value}
+                        </strong>
+
+                        <span>
+                          {card.title}
+                        </span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              }
+            )}
           </div>
         </Container>
       </main>
