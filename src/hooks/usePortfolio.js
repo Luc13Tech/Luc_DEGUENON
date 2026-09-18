@@ -1,4 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import {
   getProfile,
@@ -13,77 +17,169 @@ const initialData = {
   projects: [],
   skills: [],
   services: [],
-  settings: [],
+  settings: null,
+};
+
+const normalizeArray = (
+  value,
+  possibleKeys = []
+) => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (
+    value &&
+    typeof value === "object"
+  ) {
+    for (const key of possibleKeys) {
+      if (Array.isArray(value[key])) {
+        return value[key];
+      }
+    }
+  }
+
+  return [];
+};
+
+const normalizeObject = (value) => {
+  if (
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+    return value;
+  }
+
+  return null;
 };
 
 export default function usePortfolio() {
-  const [data, setData] = useState(initialData);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] =
+    useState(initialData);
 
-  const loadPortfolio = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const [loading, setLoading] =
+    useState(true);
 
-    try {
-      const results = await Promise.allSettled([
-        getProfile(),
-        getProjects(),
-        getSkills(),
-        getServices(),
-        getSettings(),
-      ]);
+  const [error, setError] =
+    useState(null);
 
-      const [profile, projects, skills, services, settings] = results;
+  const loadPortfolio =
+    useCallback(async () => {
+      setLoading(true);
+      setError(null);
 
-      setData({
-        profile:
-          profile.status === "fulfilled"
-            ? profile.value
-            : null,
+      try {
+        const results =
+          await Promise.allSettled([
+            getProfile(),
+            getProjects(),
+            getSkills(),
+            getServices(),
+            getSettings(),
+          ]);
 
-        projects:
-          projects.status === "fulfilled"
-            ? projects.value
-            : [],
+        const [
+          profileResult,
+          projectsResult,
+          skillsResult,
+          servicesResult,
+          settingsResult,
+        ] = results;
 
-        skills:
-          skills.status === "fulfilled"
-            ? skills.value
-            : [],
+        const profile =
+          profileResult.status ===
+          "fulfilled"
+            ? normalizeObject(
+                profileResult.value
+              )
+            : null;
 
-        services:
-          services.status === "fulfilled"
-            ? services.value
-            : [],
+        const projects =
+          projectsResult.status ===
+          "fulfilled"
+            ? normalizeArray(
+                projectsResult.value,
+                [
+                  "projects",
+                  "items",
+                  "data",
+                ]
+              )
+            : [];
 
-        settings:
-          settings.status === "fulfilled"
-            ? settings.value
-            : [],
-      });
+        const skills =
+          skillsResult.status ===
+          "fulfilled"
+            ? normalizeArray(
+                skillsResult.value,
+                [
+                  "skills",
+                  "items",
+                  "data",
+                ]
+              )
+            : [];
 
-      const failedRequests = results.filter(
-        (result) => result.status === "rejected"
-      );
+        const services =
+          servicesResult.status ===
+          "fulfilled"
+            ? normalizeArray(
+                servicesResult.value,
+                [
+                  "services",
+                  "items",
+                  "data",
+                ]
+              )
+            : [];
 
-      if (failedRequests.length > 0) {
-        console.warn(
-          `⚠️ ${failedRequests.length} requête(s) du portfolio ont échoué.`
+        const settings =
+          settingsResult.status ===
+          "fulfilled"
+            ? normalizeObject(
+                settingsResult.value
+              )
+            : null;
+
+        setData({
+          profile,
+          projects,
+          skills,
+          services,
+          settings,
+        });
+
+        const failedRequests =
+          results.filter(
+            (result) =>
+              result.status ===
+              "rejected"
+          );
+
+        if (
+          failedRequests.length > 0
+        ) {
+          console.warn(
+            `⚠️ ${failedRequests.length} requête(s) du portfolio ont échoué.`
+          );
+        }
+      } catch (err) {
+        console.error(
+          "❌ Impossible de charger le portfolio :",
+          err
         );
-      }
-    } catch (err) {
-      console.error("❌ Impossible de charger le portfolio :", err);
 
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "Impossible de charger les données du portfolio."
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        setError(
+          err?.response?.data
+            ?.message ||
+            err?.message ||
+            "Impossible de charger les données du portfolio."
+        );
+      } finally {
+        setLoading(false);
+      }
+    }, []);
 
   useEffect(() => {
     loadPortfolio();
@@ -95,4 +191,4 @@ export default function usePortfolio() {
     error,
     reload: loadPortfolio,
   };
-  }
+}
