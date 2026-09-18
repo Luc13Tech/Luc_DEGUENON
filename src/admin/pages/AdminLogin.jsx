@@ -16,6 +16,7 @@ import Button from "../../components/Button";
 import SEO from "../../components/SEO";
 
 import { adminLogin } from "../services/adminApi";
+import "./AdminLogin.css";
 
 export default function AdminLogin({
   onLogin,
