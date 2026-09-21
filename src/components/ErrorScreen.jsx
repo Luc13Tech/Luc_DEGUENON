@@ -1,21 +1,43 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-export default function ErrorScreen({ message, onRetry }) {
+export default function ErrorScreen({
+  message,
+  onRetry,
+}) {
+  const { t } = useTranslation();
+
   return (
-    <main className="error-screen" role="alert">
+    <main
+      className="error-screen"
+      role="alert"
+      aria-live="assertive"
+    >
       <motion.div
         className="error-screen__content"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.5,
+        }}
       >
-        <span className="error-screen__code">ERROR</span>
+        <span className="error-screen__code">
+          ERROR
+        </span>
 
-        <h1>Une erreur est survenue</h1>
+        <h1>
+          {t("common.errorTitle")}
+        </h1>
 
         <p>
           {message ||
-            "Impossible de charger les données du portfolio."}
+            t("common.errorMessage")}
         </p>
 
         {onRetry && (
@@ -24,7 +46,7 @@ export default function ErrorScreen({ message, onRetry }) {
             className="error-screen__button"
             onClick={onRetry}
           >
-            Réessayer
+            {t("common.retry")}
           </button>
         )}
       </motion.div>
