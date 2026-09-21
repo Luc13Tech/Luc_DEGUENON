@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import AnimatedBackground from "../../components/AnimatedBackground";
 import Container from "../../components/Container";
@@ -9,6 +10,8 @@ import SocialLinks from "../../components/SocialLinks";
 import SEO from "../../components/SEO";
 
 export default function Home({ profile }) {
+  const { t } = useTranslation();
+
   const name =
     profile?.name ||
     profile?.fullName ||
@@ -17,12 +20,12 @@ export default function Home({ profile }) {
   const role =
     profile?.role ||
     profile?.title ||
-    "Développeur Web & Mobile";
+    t("home.defaultRole");
 
   const description =
     profile?.bio ||
     profile?.description ||
-    "Je conçois des solutions numériques modernes, performantes et adaptées aux besoins des entreprises.";
+    t("home.defaultDescription");
 
   const image =
     profile?.image?.url ||
@@ -33,8 +36,10 @@ export default function Home({ profile }) {
   return (
     <>
       <SEO
-        title="Accueil"
-        description={`${name} — ${role}. Portfolio professionnel et réalisations numériques.`}
+        title={t("nav.home")}
+        description={`${name} — ${role}. ${t(
+          "home.seoDescription"
+        )}`}
       />
 
       <main className="home">
@@ -49,7 +54,7 @@ export default function Home({ profile }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                BIENVENUE SUR MON PORTFOLIO
+                {t("home.welcome")}
               </motion.span>
 
               <motion.h1
@@ -101,14 +106,14 @@ export default function Home({ profile }) {
                   to="/projects"
                   icon={<ArrowRight size={18} />}
                 >
-                  Voir mes réalisations
+                  {t("home.viewProjects")}
                 </Button>
 
                 <Button
                   to="/contact"
                   variant="secondary"
                 >
-                  Me contacter
+                  {t("common.contactMe")}
                 </Button>
               </motion.div>
 
@@ -161,9 +166,13 @@ export default function Home({ profile }) {
                     src={image}
                     alt={name}
                     className="hero__image"
+                    loading="eager"
                   />
                 ) : (
-                  <div className="hero__image-placeholder">
+                  <div
+                    className="hero__image-placeholder"
+                    aria-label={name}
+                  >
                     LD
                   </div>
                 )}
@@ -179,7 +188,7 @@ export default function Home({ profile }) {
               duration: 1.8,
               repeat: Infinity,
             }}
-            aria-label="Découvrir la suite"
+            aria-label={t("home.discover")}
           >
             <ArrowDown size={20} />
           </motion.a>
@@ -192,25 +201,18 @@ export default function Home({ profile }) {
           <Container>
             <div className="home__intro-content">
               <span className="home__eyebrow">
-                MON UNIVERS
+                {t("home.universe")}
               </span>
 
-              <h2>
-                Des expériences numériques pensées pour
-                durer.
-              </h2>
+              <h2>{t("home.introTitle")}</h2>
 
-              <p>
-                Découvrez mon parcours, mes compétences et
-                les projets réalisés pour différents secteurs
-                d'activité.
-              </p>
+              <p>{t("home.introDescription")}</p>
 
               <Link
                 to="/about"
                 className="home__text-link"
               >
-                En savoir plus
+                {t("home.learnMore")}
                 <ArrowRight size={18} />
               </Link>
             </div>
