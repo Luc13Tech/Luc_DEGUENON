@@ -12,6 +12,7 @@ import SectionTitle from "../../components/SectionTitle";
 import SkillGrid from "../../components/SkillGrid";
 import Button from "../../components/Button";
 import SEO from "../../components/SEO";
+import "./About.css";
 
 export default function About({
   profile,
