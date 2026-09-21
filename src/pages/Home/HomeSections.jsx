@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Container from "../../components/Container";
 import SectionTitle from "../../components/SectionTitle";
@@ -10,13 +10,17 @@ import SkillGrid from "../../components/SkillGrid";
 import Button from "../../components/Button";
 
 export function SkillsPreview({ skills = [] }) {
+  const { t } = useTranslation();
+
   return (
     <section className="home-section home-section--skills">
       <Container>
         <SectionTitle
-          eyebrow="EXPERTISE"
-          title="Mes compétences"
-          description="Les technologies utilisées pour concevoir des solutions numériques modernes."
+          eyebrow={t("homeSections.skills.eyebrow")}
+          title={t("homeSections.skills.title")}
+          description={t(
+            "homeSections.skills.description"
+          )}
         />
 
         <SkillGrid skills={skills.slice(0, 6)} />
@@ -27,7 +31,7 @@ export function SkillsPreview({ skills = [] }) {
               to="/about"
               icon={<ArrowRight size={18} />}
             >
-              Voir toutes mes compétences
+              {t("homeSections.skills.viewAll")}
             </Button>
           </div>
         )}
@@ -39,13 +43,17 @@ export function SkillsPreview({ skills = [] }) {
 export function ProjectsPreview({
   projects = [],
 }) {
+  const { t } = useTranslation();
+
   return (
     <section className="home-section home-section--projects">
       <Container>
         <SectionTitle
-          eyebrow="RÉALISATIONS"
-          title="Quelques projets"
-          description="Découvrez une sélection de réalisations développées pour différents besoins."
+          eyebrow={t("homeSections.projects.eyebrow")}
+          title={t("homeSections.projects.title")}
+          description={t(
+            "homeSections.projects.description"
+          )}
         />
 
         {projects.length > 0 ? (
@@ -65,7 +73,7 @@ export function ProjectsPreview({
           </div>
         ) : (
           <p className="home-section__empty">
-            Les réalisations seront bientôt disponibles.
+            {t("homeSections.projects.empty")}
           </p>
         )}
 
@@ -75,7 +83,7 @@ export function ProjectsPreview({
               to="/projects"
               icon={<ArrowRight size={18} />}
             >
-              Voir toutes les réalisations
+              {t("homeSections.projects.viewAll")}
             </Button>
           </div>
         )}
@@ -87,13 +95,17 @@ export function ProjectsPreview({
 export function ServicesPreview({
   services = [],
 }) {
+  const { t } = useTranslation();
+
   return (
     <section className="home-section home-section--services">
       <Container>
         <SectionTitle
-          eyebrow="SERVICES"
-          title="Ce que je propose"
-          description="Des prestations numériques adaptées aux objectifs de votre projet."
+          eyebrow={t("homeSections.services.eyebrow")}
+          title={t("homeSections.services.title")}
+          description={t(
+            "homeSections.services.description"
+          )}
         />
 
         <ServiceGrid services={services.slice(0, 4)} />
@@ -104,7 +116,7 @@ export function ServicesPreview({
               to="/services"
               icon={<ArrowRight size={18} />}
             >
-              Découvrir tous les services
+              {t("homeSections.services.viewAll")}
             </Button>
           </div>
         )}
@@ -114,10 +126,13 @@ export function ServicesPreview({
 }
 
 export function ProjectLinks({ projects = [] }) {
+  const { t } = useTranslation();
+
   const externalProjects = projects.filter(
     (project) =>
       project?.liveUrl ||
-      project?.url
+      project?.url ||
+      project?.website
   );
 
   if (externalProjects.length === 0) {
@@ -128,9 +143,11 @@ export function ProjectLinks({ projects = [] }) {
     <section className="home-section home-section--links">
       <Container>
         <SectionTitle
-          eyebrow="EN LIGNE"
-          title="Mes réalisations sur le web"
-          description="Accédez directement aux plateformes et sites réalisés."
+          eyebrow={t("homeSections.links.eyebrow")}
+          title={t("homeSections.links.title")}
+          description={t(
+            "homeSections.links.description"
+          )}
         />
 
         <div className="project-links">
@@ -138,24 +155,31 @@ export function ProjectLinks({ projects = [] }) {
             (project, index) => {
               const url =
                 project.liveUrl ||
-                project.url;
+                project.url ||
+                project.website;
 
               const title =
                 project.title ||
                 project.name ||
-                "Projet";
+                t(
+                  "homeSections.links.projectFallback"
+                );
 
               return (
                 <motion.a
                   key={
                     project._id ||
                     project.id ||
+                    project.slug ||
                     index
                   }
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-link"
+                  aria-label={`${title} — ${t(
+                    "homeSections.links.openProject"
+                  )}`}
                   whileHover={{ y: -4 }}
                 >
                   <span>{title}</span>
