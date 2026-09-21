@@ -9,10 +9,22 @@ export default function SectionTitle({
   return (
     <motion.div
       className={`section-title section-title--${align}`}
-      initial={{ opacity: 0, y: 25 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6 }}
+      initial={{
+        opacity: 0,
+        y: 25,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.2,
+      }}
+      transition={{
+        duration: 0.6,
+        ease: "easeOut",
+      }}
     >
       {eyebrow && (
         <span className="section-title__eyebrow">
@@ -20,9 +32,11 @@ export default function SectionTitle({
         </span>
       )}
 
-      <h2 className="section-title__heading">
-        {title}
-      </h2>
+      {title && (
+        <h2 className="section-title__heading">
+          {title}
+        </h2>
+      )}
 
       {description && (
         <p className="section-title__description">
