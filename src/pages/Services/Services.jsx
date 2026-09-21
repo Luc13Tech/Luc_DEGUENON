@@ -5,6 +5,7 @@ import Container from "../../components/Container";
 import SectionTitle from "../../components/SectionTitle";
 import ServiceGrid from "../../components/ServiceGrid";
 import SEO from "../../components/SEO";
+import "./Services.css";
 
 export default function Services({
   services = [],
