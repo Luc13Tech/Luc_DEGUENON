@@ -11,15 +11,27 @@ export default function Button({
   disabled = false,
   icon = null,
   className = "",
+  ariaLabel,
 }) {
-  const classes = `button button--${variant} ${className}`.trim();
+  const classes = [
+    "button",
+    `button--${variant}`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const content = (
     <>
-      <span className="button__text">{children}</span>
+      <span className="button__text">
+        {children}
+      </span>
 
       {icon && (
-        <span className="button__icon" aria-hidden="true">
+        <span
+          className="button__icon"
+          aria-hidden="true"
+        >
           {icon}
         </span>
       )}
@@ -29,10 +41,15 @@ export default function Button({
   if (to) {
     return (
       <motion.div
+        className="button-wrapper"
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
       >
-        <Link to={to} className={classes}>
+        <Link
+          to={to}
+          className={classes}
+          aria-label={ariaLabel}
+        >
           {content}
         </Link>
       </motion.div>
@@ -42,12 +59,14 @@ export default function Button({
   if (href) {
     return (
       <motion.div
+        className="button-wrapper"
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
       >
         <a
           href={href}
           className={classes}
+          aria-label={ariaLabel}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -63,8 +82,20 @@ export default function Button({
       className={classes}
       onClick={onClick}
       disabled={disabled}
-      whileHover={!disabled ? { y: -2 } : undefined}
-      whileTap={!disabled ? { scale: 0.97 } : undefined}
+      aria-label={ariaLabel}
+      whileHover={
+        !disabled
+          ? { y: -2 }
+          : undefined
+      }
+      whileTap={
+        !disabled
+          ? { scale: 0.97 }
+          : undefined
+      }
+      transition={{
+        duration: 0.2,
+      }}
     >
       {content}
     </motion.button>
