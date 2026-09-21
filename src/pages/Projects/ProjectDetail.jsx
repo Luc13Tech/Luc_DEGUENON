@@ -1,6 +1,11 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+} from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import Container from "../../components/Container";
 import Button from "../../components/Button";
@@ -9,40 +14,55 @@ import SEO from "../../components/SEO";
 export default function ProjectDetail({
   projects = [],
 }) {
+  const { t } = useTranslation();
   const { slug } = useParams();
 
   const project = projects.find(
     (item) =>
-      item?.slug === slug ||
-      item?._id === slug ||
-      item?.id === slug
+      String(item?.slug || "") === String(slug) ||
+      String(item?._id || "") === String(slug) ||
+      String(item?.id || "") === String(slug)
   );
 
   if (!project) {
     return (
       <>
-        <SEO title="Projet introuvable" />
+        <SEO
+          title={t("projects.notFound")}
+          description={t(
+            "projects.notFoundDescription"
+          )}
+        />
 
         <main className="project-detail project-detail--not-found">
           <Container>
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{
+                opacity: 0,
+                y: 25,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
             >
               <span>404</span>
 
-              <h1>Projet introuvable</h1>
+              <h1>
+                {t("projects.notFound")}
+              </h1>
 
               <p>
-                Cette réalisation n'existe pas ou n'est plus
-                disponible.
+                {t(
+                  "projects.notFoundDescription"
+                )}
               </p>
 
               <Button
                 to="/projects"
                 icon={<ArrowLeft size={18} />}
               >
-                Retour aux réalisations
+                {t("projects.backToProjects")}
               </Button>
             </motion.div>
           </Container>
@@ -54,7 +74,7 @@ export default function ProjectDetail({
   const title =
     project.title ||
     project.name ||
-    "Projet";
+    t("homeSections.links.projectFallback");
 
   const description =
     project.description ||
@@ -64,19 +84,29 @@ export default function ProjectDetail({
   const image =
     project.image?.url ||
     project.imageUrl ||
-    project.image;
+    (typeof project.image === "string"
+      ? project.image
+      : "");
 
   const website =
     project.liveUrl ||
-    project.url;
+    project.website ||
+    project.url ||
+    "";
 
   const github =
-    project.githubUrl;
+    project.githubUrl ||
+    project.github ||
+    "";
 
-  const technologies =
-    Array.isArray(project.technologies)
-      ? project.technologies
-      : [];
+  const technologies = Array.isArray(
+    project.technologies
+  )
+    ? project.technologies
+    : [];
+
+  const longDescription =
+    project.longDescription || "";
 
   return (
     <>
@@ -93,14 +123,24 @@ export default function ProjectDetail({
               className="project-detail__back"
             >
               <ArrowLeft size={18} />
-              Retour aux réalisations
+              {t(
+                "projects.backToProjects"
+              )}
             </Link>
 
             <motion.div
               className="project-detail__header"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
             >
               {project.category && (
                 <span className="project-detail__category">
@@ -130,35 +170,63 @@ export default function ProjectDetail({
                   opacity: 1,
                   scale: 1,
                 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.7,
+                }}
               >
                 <img
                   src={image}
                   alt={title}
                   className="project-detail__image"
+                  loading="lazy"
+                  onError={(event) => {
+                    event.currentTarget.style.display =
+                      "none";
+                  }}
                 />
               </motion.div>
             )}
 
             <div className="project-detail__grid">
               <div className="project-detail__description">
-                {project.longDescription &&
-                  project.longDescription !==
-                    description && (
-                    <>
-                      <h2>À propos du projet</h2>
-                      <p>
-                        {project.longDescription}
-                      </p>
-                    </>
-                  )}
+                {longDescription ? (
+                  <>
+                    <h2>
+                      {t(
+                        "projects.aboutProject"
+                      )}
+                    </h2>
+
+                    <p>
+                      {longDescription}
+                    </p>
+                  </>
+                ) : description ? (
+                  <>
+                    <h2>
+                      {t(
+                        "projects.aboutProject"
+                      )}
+                    </h2>
+
+                    <p>
+                      {description}
+                    </p>
+                  </>
+                ) : null}
               </div>
 
               <aside className="project-detail__sidebar">
                 {technologies.length > 0 && (
                   <div>
-                    <h3>Technologies</h3>
+                    <h3>
+                      {t(
+                        "projects.technologies"
+                      )}
+                    </h3>
 
                     <div className="project-detail__technologies">
                       {technologies.map(
@@ -182,7 +250,7 @@ export default function ProjectDetail({
                         <ExternalLink size={18} />
                       }
                     >
-                      Visiter le projet
+                      {t("projects.visit")}
                     </Button>
                   )}
 
@@ -190,9 +258,13 @@ export default function ProjectDetail({
                     <Button
                       href={github}
                       variant="secondary"
-                      icon={<Github size={18} />}
+                      icon={
+                        <Github size={18} />
+                      }
                     >
-                      Voir le code
+                      {t(
+                        "projects.sourceCode"
+                      )}
                     </Button>
                   )}
                 </div>
