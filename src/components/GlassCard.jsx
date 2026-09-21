@@ -5,11 +5,22 @@ export default function GlassCard({
   className = "",
   hover = true,
   onClick,
+  role,
+  ariaLabel,
 }) {
+  const classes = [
+    "glass-card",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <motion.div
-      className={`glass-card ${className}`.trim()}
+      className={classes}
       onClick={onClick}
+      role={role}
+      aria-label={ariaLabel}
       whileHover={
         hover
           ? {
