@@ -4,6 +4,7 @@ import Container from "../../components/Container";
 import SectionTitle from "../../components/SectionTitle";
 import ProjectCard from "../../components/ProjectCard";
 import SEO from "../../components/SEO";
+import "./Projects.css";
 
 export default function Projects({ projects = [] }) {
   return (
