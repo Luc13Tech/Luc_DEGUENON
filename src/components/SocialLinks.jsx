@@ -1,4 +1,9 @@
-import { Github, Linkedin, Mail, Globe } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Globe,
+} from "lucide-react";
 
 const defaultLinks = [
   {
@@ -24,39 +29,72 @@ const defaultLinks = [
 export default function SocialLinks({
   links = defaultLinks,
   showLabels = false,
+  className = "",
 }) {
-  return (
-    <div className="social-links">
-      {links.map((item) => {
-        if (!item?.href) return null;
+  const validLinks = Array.isArray(links)
+    ? links.filter(
+        (item) => item?.href
+      )
+    : [];
 
+  if (validLinks.length === 0) {
+    return null;
+  }
+
+  const classes = [
+    "social-links",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <nav
+      className={classes}
+      aria-label="Réseaux sociaux"
+    >
+      {validLinks.map((item) => {
         const Icon = item.icon || Globe;
+
+        const isMail =
+          item.href.startsWith("mailto:");
 
         return (
           <a
-            key={item.key || item.label}
+            key={
+              item.key ||
+              item.label ||
+              item.href
+            }
             href={item.href}
             className="social-links__item"
             target={
-              item.href.startsWith("mailto:")
+              isMail
                 ? undefined
                 : "_blank"
             }
             rel={
-              item.href.startsWith("mailto:")
+              isMail
                 ? undefined
                 : "noopener noreferrer"
             }
-            aria-label={item.label}
+            aria-label={
+              item.label || "Lien externe"
+            }
           >
-            <Icon size={20} aria-hidden="true" />
+            <Icon
+              size={20}
+              aria-hidden="true"
+            />
 
             {showLabels && (
-              <span>{item.label}</span>
+              <span>
+                {item.label}
+              </span>
             )}
           </a>
         );
       })}
-    </div>
+    </nav>
   );
 }
