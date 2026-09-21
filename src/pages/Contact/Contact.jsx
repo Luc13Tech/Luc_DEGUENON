@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle,
+} from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import Container from "../../components/Container";
 import SectionTitle from "../../components/SectionTitle";
@@ -9,6 +16,8 @@ import SEO from "../../components/SEO";
 import api from "../../services/api";
 
 export default function Contact({ profile }) {
+  const { t } = useTranslation();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -22,13 +31,14 @@ export default function Contact({ profile }) {
   const [error, setError] = useState("");
 
   const email =
-    profile?.email || "contact@lucdeguenon.com";
+    profile?.email ||
+    "contact@lucdeguenon.com";
 
-  const phone =
-    profile?.phone || "";
+  const phone = profile?.phone || "";
 
   const location =
-    profile?.location || "Dakar, Sénégal";
+    profile?.location ||
+    t("contact.location");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -50,7 +60,7 @@ export default function Contact({ profile }) {
       await api.post("/contact", form);
 
       setSuccess(
-        "Votre message a bien été envoyé. Merci pour votre confiance."
+        t("contact.success")
       );
 
       setForm({
@@ -63,7 +73,7 @@ export default function Contact({ profile }) {
     } catch (err) {
       setError(
         err?.response?.data?.message ||
-          "Impossible d'envoyer votre message. Veuillez réessayer."
+          t("contact.error")
       );
     } finally {
       setLoading(false);
@@ -73,29 +83,38 @@ export default function Contact({ profile }) {
   return (
     <>
       <SEO
-        title="Contact"
-        description="Contactez Luc DEGUENON pour discuter de votre projet numérique."
+        title={t("contact.title")}
+        description={t(
+          "contact.description"
+        )}
       />
 
       <main className="contact-page">
         <section className="page-hero">
           <Container>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
             >
               <span className="page-hero__eyebrow">
-                CONTACT
+                {t("contact.eyebrow")}
               </span>
 
               <h1 className="page-hero__title">
-                Parlons de votre projet.
+                {t("contact.title")}
               </h1>
 
               <p className="page-hero__description">
-                Une idée, un besoin ou un projet à développer ?
-                Envoyez-moi un message.
+                {t("contact.description")}
               </p>
             </motion.div>
           </Container>
@@ -106,16 +125,32 @@ export default function Contact({ profile }) {
             <div className="contact-page__grid">
               <motion.div
                 className="contact-page__info"
-                initial={{ opacity: 0, x: -35 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                initial={{
+                  opacity: 0,
+                  x: -35,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.6,
+                }}
               >
                 <SectionTitle
                   align="left"
-                  eyebrow="ÉCHANGEONS"
-                  title="Restons en contact"
-                  description="Présentez-moi votre besoin et nous pourrons échanger sur les prochaines étapes."
+                  eyebrow={t(
+                    "contact.exchange"
+                  )}
+                  title={t(
+                    "contact.stayInTouch"
+                  )}
+                  description={t(
+                    "contact.stayInTouchDescription"
+                  )}
                 />
 
                 <div className="contact-details">
@@ -124,12 +159,20 @@ export default function Contact({ profile }) {
                     className="contact-detail"
                   >
                     <span className="contact-detail__icon">
-                      <Mail size={21} />
+                      <Mail
+                        size={21}
+                        aria-hidden="true"
+                      />
                     </span>
 
                     <span>
-                      <strong>Email</strong>
-                      <small>{email}</small>
+                      <strong>
+                        {t("contact.email")}
+                      </strong>
+
+                      <small>
+                        {email}
+                      </small>
                     </span>
                   </a>
 
@@ -139,24 +182,42 @@ export default function Contact({ profile }) {
                       className="contact-detail"
                     >
                       <span className="contact-detail__icon">
-                        <Phone size={21} />
+                        <Phone
+                          size={21}
+                          aria-hidden="true"
+                        />
                       </span>
 
                       <span>
-                        <strong>Téléphone</strong>
-                        <small>{phone}</small>
+                        <strong>
+                          {t("contact.phone")}
+                        </strong>
+
+                        <small>
+                          {phone}
+                        </small>
                       </span>
                     </a>
                   )}
 
                   <div className="contact-detail">
                     <span className="contact-detail__icon">
-                      <MapPin size={21} />
+                      <MapPin
+                        size={21}
+                        aria-hidden="true"
+                      />
                     </span>
 
                     <span>
-                      <strong>Localisation</strong>
-                      <small>{location}</small>
+                      <strong>
+                        {t(
+                          "contact.location"
+                        )}
+                      </strong>
+
+                      <small>
+                        {location}
+                      </small>
                     </span>
                   </div>
                 </div>
@@ -164,10 +225,20 @@ export default function Contact({ profile }) {
 
               <motion.div
                 className="contact-page__form-wrapper"
-                initial={{ opacity: 0, x: 35 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                initial={{
+                  opacity: 0,
+                  x: 35,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.6,
+                }}
               >
                 <form
                   className="contact-form"
@@ -175,25 +246,33 @@ export default function Contact({ profile }) {
                 >
                   <div className="contact-form__row">
                     <label>
-                      Nom
+                      {t("contact.name")}
+
                       <input
                         type="text"
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Votre nom"
+                        placeholder={t(
+                          "contact.namePlaceholder"
+                        )}
+                        autoComplete="name"
                         required
                       />
                     </label>
 
                     <label>
-                      Email
+                      {t("contact.email")}
+
                       <input
                         type="email"
                         name="email"
                         value={form.email}
                         onChange={handleChange}
-                        placeholder="votre@email.com"
+                        placeholder={t(
+                          "contact.emailPlaceholder"
+                        )}
+                        autoComplete="email"
                         required
                       />
                     </label>
@@ -201,36 +280,46 @@ export default function Contact({ profile }) {
 
                   <div className="contact-form__row">
                     <label>
-                      Téléphone
+                      {t("contact.phone")}
+
                       <input
                         type="tel"
                         name="phone"
                         value={form.phone}
                         onChange={handleChange}
-                        placeholder="+221 ..."
+                        placeholder={t(
+                          "contact.phonePlaceholder"
+                        )}
+                        autoComplete="tel"
                       />
                     </label>
 
                     <label>
-                      Objet
+                      {t("contact.subject")}
+
                       <input
                         type="text"
                         name="subject"
                         value={form.subject}
                         onChange={handleChange}
-                        placeholder="Objet de votre demande"
+                        placeholder={t(
+                          "contact.subjectPlaceholder"
+                        )}
                         required
                       />
                     </label>
                   </div>
 
                   <label>
-                    Message
+                    {t("contact.message")}
+
                     <textarea
                       name="message"
                       value={form.message}
                       onChange={handleChange}
-                      placeholder="Décrivez votre projet..."
+                      placeholder={t(
+                        "contact.messagePlaceholder"
+                      )}
                       rows="7"
                       required
                     />
@@ -241,8 +330,14 @@ export default function Contact({ profile }) {
                       className="contact-form__success"
                       role="status"
                     >
-                      <CheckCircle size={19} />
-                      <span>{success}</span>
+                      <CheckCircle
+                        size={19}
+                        aria-hidden="true"
+                      />
+
+                      <span>
+                        {success}
+                      </span>
                     </div>
                   )}
 
@@ -261,8 +356,8 @@ export default function Contact({ profile }) {
                     icon={<Send size={18} />}
                   >
                     {loading
-                      ? "Envoi en cours..."
-                      : "Envoyer le message"}
+                      ? t("contact.sending")
+                      : t("contact.send")}
                   </Button>
                 </form>
               </motion.div>
