@@ -1,13 +1,23 @@
 import { motion } from "framer-motion";
+
 import ServiceCard from "./ServiceCard";
 
 export default function ServiceGrid({
   services = [],
 }) {
-  if (!Array.isArray(services) || services.length === 0) {
+  const validServices = Array.isArray(services)
+    ? services.filter(Boolean)
+    : [];
+
+  if (validServices.length === 0) {
     return (
-      <div className="service-grid service-grid--empty">
-        <p>Aucun service disponible pour le moment.</p>
+      <div
+        className="service-grid service-grid--empty"
+        role="status"
+      >
+        <p>
+          Aucun service disponible pour le moment.
+        </p>
       </div>
     );
   }
@@ -30,11 +40,12 @@ export default function ServiceGrid({
         },
       }}
     >
-      {services.map((service, index) => (
+      {validServices.map((service, index) => (
         <ServiceCard
           key={
             service._id ||
             service.id ||
+            service.slug ||
             service.name ||
             service.title ||
             index
