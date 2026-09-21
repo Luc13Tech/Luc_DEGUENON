@@ -3,12 +3,15 @@ import { initReactI18next } from "react-i18next";
 
 import translations from "./translations";
 
+const savedLanguage =
+  localStorage.getItem("language") || "fr";
+
 i18n
   .use(initReactI18next)
   .init({
     resources: translations,
 
-    lng: "fr",
+    lng: savedLanguage,
 
     fallbackLng: "fr",
 
