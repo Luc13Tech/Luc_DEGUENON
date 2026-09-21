@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
+
 import GlassCard from "./GlassCard";
 
 export default function SkillCard({
   skill,
   index = 0,
 }) {
-  if (!skill) return null;
+  if (!skill) {
+    return null;
+  }
 
   const {
     name,
@@ -16,19 +19,36 @@ export default function SkillCard({
     icon,
   } = skill;
 
-  const skillName = name || title || "Compétence";
+  const skillName =
+    name ||
+    title ||
+    "Compétence";
+
+  const numericPercentage =
+    typeof percentage === "number"
+      ? percentage
+      : typeof level === "number"
+        ? level
+        : null;
 
   const progress =
-    typeof percentage === "number"
-      ? Math.min(100, Math.max(0, percentage))
-      : typeof level === "number"
-        ? Math.min(100, Math.max(0, level))
-        : null;
+    numericPercentage !== null
+      ? Math.min(
+          100,
+          Math.max(0, numericPercentage)
+        )
+      : null;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
       viewport={{
         once: true,
         amount: 0.15,
@@ -36,13 +56,17 @@ export default function SkillCard({
       transition={{
         duration: 0.5,
         delay: index * 0.06,
+        ease: "easeOut",
       }}
     >
       <GlassCard className="skill-card">
         <div className="skill-card__header">
           <div className="skill-card__identity">
             {icon && (
-              <div className="skill-card__icon">
+              <div
+                className="skill-card__icon"
+                aria-hidden="true"
+              >
                 {icon}
               </div>
             )}
@@ -76,9 +100,15 @@ export default function SkillCard({
           >
             <motion.div
               className="skill-card__progress-bar"
-              initial={{ width: 0 }}
-              whileInView={{ width: `${progress}%` }}
-              viewport={{ once: true }}
+              initial={{
+                width: 0,
+              }}
+              whileInView={{
+                width: `${progress}%`,
+              }}
+              viewport={{
+                once: true,
+              }}
               transition={{
                 duration: 1,
                 delay: index * 0.06 + 0.2,
