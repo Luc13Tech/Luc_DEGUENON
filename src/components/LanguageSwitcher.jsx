@@ -16,10 +16,30 @@ const languages = [
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
-  const changeLanguage = (language) => {
-    if (language === i18n.language) return;
+  const currentLanguage = (
+    i18n.resolvedLanguage ||
+    i18n.language ||
+    "fr"
+  ).split("-")[0];
 
-    i18n.changeLanguage(language);
+  const changeLanguage = async (language) => {
+    if (!language || language === currentLanguage) {
+      return;
+    }
+
+    try {
+      await i18n.changeLanguage(language);
+
+      localStorage.setItem(
+        "language",
+        language
+      );
+    } catch (error) {
+      console.error(
+        "Erreur lors du changement de langue :",
+        error
+      );
+    }
   };
 
   return (
@@ -29,7 +49,8 @@ export default function LanguageSwitcher() {
       aria-label="Choisir la langue"
     >
       {languages.map((language) => {
-        const active = i18n.language === language.code;
+        const active =
+          currentLanguage === language.code;
 
         return (
           <button
@@ -40,7 +61,9 @@ export default function LanguageSwitcher() {
                 ? "language-switcher__button--active"
                 : ""
             }`}
-            onClick={() => changeLanguage(language.code)}
+            onClick={() =>
+              changeLanguage(language.code)
+            }
             aria-label={`Passer en ${language.name}`}
             aria-pressed={active}
           >
