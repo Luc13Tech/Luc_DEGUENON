@@ -29,9 +29,61 @@ const translations = {
         welcome: "BIENVENUE SUR MON PORTFOLIO",
         universe: "MON UNIVERS",
         discover: "Découvrir la suite",
-        projects: "Quelques projets",
-        skills: "Mes compétences",
-        services: "Ce que je propose",
+
+        defaultRole: "Développeur Web & Mobile",
+
+        defaultDescription:
+          "Je conçois des solutions numériques modernes, performantes et adaptées aux besoins des entreprises.",
+
+        seoDescription:
+          "Portfolio professionnel, projets et solutions numériques.",
+
+        viewProjects: "Voir mes réalisations",
+
+        introTitle:
+          "Des expériences numériques pensées pour durer.",
+
+        introDescription:
+          "Découvrez mon parcours, mes compétences et les projets réalisés pour différents secteurs d'activité.",
+
+        learnMore: "En savoir plus",
+      },
+
+      homeSections: {
+        skills: {
+          eyebrow: "EXPERTISE",
+          title: "Mes compétences",
+          description:
+            "Les technologies utilisées pour concevoir des solutions numériques modernes.",
+          viewAll: "Voir toutes mes compétences",
+        },
+
+        projects: {
+          eyebrow: "RÉALISATIONS",
+          title: "Quelques projets",
+          description:
+            "Découvrez une sélection de réalisations développées pour différents besoins.",
+          empty:
+            "Les réalisations seront bientôt disponibles.",
+          viewAll: "Voir toutes les réalisations",
+        },
+
+        services: {
+          eyebrow: "SERVICES",
+          title: "Ce que je propose",
+          description:
+            "Des prestations numériques adaptées aux objectifs de votre projet.",
+          viewAll: "Découvrir tous les services",
+        },
+
+        links: {
+          eyebrow: "EN LIGNE",
+          title: "Mes réalisations sur le web",
+          description:
+            "Accédez directement aux plateformes et sites réalisés.",
+          projectFallback: "Projet",
+          openProject: "Ouvrir le projet",
+        },
       },
 
       about: {
@@ -119,9 +171,61 @@ const translations = {
         welcome: "WELCOME TO MY PORTFOLIO",
         universe: "MY WORLD",
         discover: "Discover more",
-        projects: "Some projects",
-        skills: "My skills",
-        services: "What I offer",
+
+        defaultRole: "Web & Mobile Developer",
+
+        defaultDescription:
+          "I design modern, high-performance digital solutions tailored to business needs.",
+
+        seoDescription:
+          "Professional portfolio, projects and digital solutions.",
+
+        viewProjects: "View my projects",
+
+        introTitle:
+          "Digital experiences designed to last.",
+
+        introDescription:
+          "Discover my journey, skills and projects developed for different industries.",
+
+        learnMore: "Learn more",
+      },
+
+      homeSections: {
+        skills: {
+          eyebrow: "EXPERTISE",
+          title: "My skills",
+          description:
+            "The technologies I use to build modern digital solutions.",
+          viewAll: "View all my skills",
+        },
+
+        projects: {
+          eyebrow: "PROJECTS",
+          title: "Some projects",
+          description:
+            "Discover a selection of projects developed for different needs.",
+          empty:
+            "Projects will be available soon.",
+          viewAll: "View all projects",
+        },
+
+        services: {
+          eyebrow: "SERVICES",
+          title: "What I offer",
+          description:
+            "Digital services adapted to the objectives of your project.",
+          viewAll: "Discover all services",
+        },
+
+        links: {
+          eyebrow: "ONLINE",
+          title: "My projects on the web",
+          description:
+            "Access the platforms and websites I have created directly.",
+          projectFallback: "Project",
+          openProject: "Open project",
+        },
       },
 
       about: {
