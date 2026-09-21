@@ -8,6 +8,7 @@ import Container from "../../components/Container";
 import Button from "../../components/Button";
 import SocialLinks from "../../components/SocialLinks";
 import SEO from "../../components/SEO";
+import "./Home.css";
 
 export default function Home({ profile }) {
   const { t } = useTranslation();
