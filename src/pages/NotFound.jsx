@@ -1,42 +1,60 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import Container from "../components/Container";
 import Button from "../components/Button";
 import SEO from "../components/SEO";
 
 export default function NotFound() {
+  const { t } = useTranslation();
+
   return (
     <>
       <SEO
-        title="Page introuvable"
-        description="La page demandée n'existe pas."
+        title={t("notFound.title")}
+        description={t(
+          "notFound.description"
+        )}
       />
 
       <main className="not-found">
         <Container>
           <motion.div
             className="not-found__content"
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{
+              opacity: 0,
+              scale: 0.9,
+              y: 30,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+            }}
           >
             <span className="not-found__code">
               404
             </span>
 
-            <h1>Page introuvable</h1>
+            <h1>
+              {t("notFound.title")}
+            </h1>
 
             <p>
-              La page que vous recherchez n'existe pas,
-              a été déplacée ou n'est plus disponible.
+              {t("notFound.description")}
             </p>
 
             <Button
               to="/"
-              icon={<ArrowLeft size={18} />}
+              icon={
+                <ArrowLeft size={18} />
+              }
             >
-              Retour à l'accueil
+              {t("notFound.backHome")}
             </Button>
           </motion.div>
         </Container>
