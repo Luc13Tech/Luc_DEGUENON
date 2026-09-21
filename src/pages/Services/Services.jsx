@@ -1,38 +1,51 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import Container from "../../components/Container";
 import SectionTitle from "../../components/SectionTitle";
 import ServiceGrid from "../../components/ServiceGrid";
 import SEO from "../../components/SEO";
 
-export default function Services({ services = [] }) {
+export default function Services({
+  services = [],
+}) {
+  const { t } = useTranslation();
+
   return (
     <>
       <SEO
-        title="Services"
-        description="Découvrez les services de développement web, mobile et de solutions numériques proposés par Luc DEGUENON."
+        title={t("services.title")}
+        description={t(
+          "services.description"
+        )}
       />
 
       <main className="services-page">
         <section className="page-hero">
           <Container>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
             >
               <span className="page-hero__eyebrow">
-                MES SERVICES
+                {t("services.eyebrow")}
               </span>
 
               <h1 className="page-hero__title">
-                Des solutions adaptées à vos besoins.
+                {t("services.title")}
               </h1>
 
               <p className="page-hero__description">
-                De la conception au développement, je vous
-                accompagne dans la réalisation de vos projets
-                numériques.
+                {t("services.description")}
               </p>
             </motion.div>
           </Container>
@@ -41,12 +54,30 @@ export default function Services({ services = [] }) {
         <section className="services-page__content">
           <Container>
             <SectionTitle
-              eyebrow="EXPERTISE"
-              title="Ce que je peux réaliser pour vous"
-              description="Des prestations pensées pour créer des produits numériques modernes, accessibles et évolutifs."
+              eyebrow={t(
+                "services.expertise"
+              )}
+              title={t(
+                "services.expertiseTitle"
+              )}
+              description={t(
+                "services.expertiseDescription"
+              )}
             />
 
-            <ServiceGrid services={services} />
+            {services.length > 0 ? (
+              <ServiceGrid
+                services={services}
+              />
+            ) : (
+              <div className="services-empty">
+                <p>
+                  {t(
+                    "services.pricingEmpty"
+                  )}
+                </p>
+              </div>
+            )}
           </Container>
         </section>
       </main>
