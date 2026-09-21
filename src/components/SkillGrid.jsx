@@ -1,13 +1,23 @@
 import { motion } from "framer-motion";
+
 import SkillCard from "./SkillCard";
 
 export default function SkillGrid({
   skills = [],
 }) {
-  if (!Array.isArray(skills) || skills.length === 0) {
+  const validSkills = Array.isArray(skills)
+    ? skills.filter(Boolean)
+    : [];
+
+  if (validSkills.length === 0) {
     return (
-      <div className="skill-grid skill-grid--empty">
-        <p>Aucune compétence disponible pour le moment.</p>
+      <div
+        className="skill-grid skill-grid--empty"
+        role="status"
+      >
+        <p>
+          Aucune compétence disponible pour le moment.
+        </p>
       </div>
     );
   }
@@ -30,11 +40,12 @@ export default function SkillGrid({
         },
       }}
     >
-      {skills.map((skill, index) => (
+      {validSkills.map((skill, index) => (
         <SkillCard
           key={
             skill._id ||
             skill.id ||
+            skill.slug ||
             skill.name ||
             index
           }
