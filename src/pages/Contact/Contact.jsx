@@ -14,6 +14,7 @@ import SectionTitle from "../../components/SectionTitle";
 import Button from "../../components/Button";
 import SEO from "../../components/SEO";
 import api from "../../services/api";
+import "./Contact.css";
 
 export default function Contact({ profile }) {
   const { t } = useTranslation();
