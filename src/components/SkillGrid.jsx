@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 
 import SkillCard from "./SkillCard";
+import "./SkillGrid.css";
 
 export default function SkillGrid({
   skills = [],
