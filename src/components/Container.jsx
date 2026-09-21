@@ -3,8 +3,15 @@ export default function Container({
   className = "",
   as: Tag = "div",
 }) {
+  const classes = [
+    "container",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <Tag className={`container ${className}`.trim()}>
+    <Tag className={classes}>
       {children}
     </Tag>
   );
