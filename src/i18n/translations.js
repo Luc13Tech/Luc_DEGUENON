@@ -14,6 +14,9 @@ const translations = {
       common: {
         loading: "Chargement...",
         retry: "Réessayer",
+        errorTitle: "Une erreur est survenue",
+        errorMessage:
+          "Impossible de charger les données. Veuillez réessayer.",
         cancel: "Annuler",
         save: "Enregistrer",
         edit: "Modifier",
@@ -29,67 +32,98 @@ const translations = {
         welcome: "BIENVENUE SUR MON PORTFOLIO",
         universe: "MON UNIVERS",
         discover: "Découvrir la suite",
-        defaultRole: "Développeur Web & Mobile",
+
+        defaultRole:
+          "Développeur Web & Mobile",
+
         defaultDescription:
           "Je conçois des solutions numériques modernes, performantes et adaptées aux besoins des entreprises.",
+
         seoDescription:
           "Portfolio professionnel, projets et solutions numériques.",
-        viewProjects: "Voir mes réalisations",
+
+        viewProjects:
+          "Voir mes réalisations",
+
         introTitle:
           "Des expériences numériques pensées pour durer.",
+
         introDescription:
           "Découvrez mon parcours, mes compétences et les projets réalisés pour différents secteurs d'activité.",
-        learnMore: "En savoir plus",
+
+        learnMore:
+          "En savoir plus",
       },
 
       homeSections: {
         skills: {
           eyebrow: "EXPERTISE",
+
           title: "Mes compétences",
+
           description:
             "Les technologies utilisées pour concevoir des solutions numériques modernes.",
-          viewAll: "Voir toutes mes compétences",
+
+          viewAll:
+            "Voir toutes mes compétences",
         },
 
         projects: {
           eyebrow: "RÉALISATIONS",
+
           title: "Quelques projets",
+
           description:
             "Découvrez une sélection de réalisations développées pour différents besoins.",
+
           empty:
             "Les réalisations seront bientôt disponibles.",
-          viewAll: "Voir toutes les réalisations",
+
+          viewAll:
+            "Voir toutes les réalisations",
         },
 
         services: {
           eyebrow: "SERVICES",
+
           title: "Ce que je propose",
+
           description:
             "Des prestations numériques adaptées aux objectifs de votre projet.",
-          viewAll: "Découvrir tous les services",
+
+          viewAll:
+            "Découvrir tous les services",
         },
 
         links: {
           eyebrow: "EN LIGNE",
-          title: "Mes réalisations sur le web",
+
+          title:
+            "Mes réalisations sur le web",
+
           description:
             "Accédez directement aux plateformes et sites réalisés.",
+
           projectFallback: "Projet",
-          openProject: "Ouvrir le projet",
+
+          openProject:
+            "Ouvrir le projet",
         },
       },
 
       about: {
         eyebrow: "À PROPOS",
 
-        title: "Construire. Innover. Évoluer.",
+        title:
+          "Construire. Innover. Évoluer.",
 
         description:
           "Un parcours orienté vers la création de solutions numériques utiles, modernes et évolutives.",
 
         journey: "MON PARCOURS",
 
-        greeting: "Bonjour, je suis {{name}}.",
+        greeting:
+          "Bonjour, je suis {{name}}.",
 
         defaultBio:
           "Développeur passionné par la création de solutions numériques modernes et performantes.",
@@ -118,18 +152,21 @@ const translations = {
         features: {
           web: {
             title: "Web moderne",
+
             description:
               "Des interfaces rapides, élégantes et adaptées à tous les écrans.",
           },
 
           mobile: {
             title: "Solutions mobiles",
+
             description:
               "Des expériences pensées pour les utilisateurs mobiles.",
           },
 
           technologies: {
             title: "Technologies",
+
             description:
               "React, React Native, Python, JavaScript et technologies associées.",
           },
@@ -137,7 +174,8 @@ const translations = {
       },
 
       projects: {
-        eyebrow: "MES RÉALISATIONS",
+        eyebrow:
+          "MES RÉALISATIONS",
 
         title:
           "Des projets qui prennent vie.",
@@ -152,14 +190,17 @@ const translations = {
         listDescription:
           "Une sélection de projets issus de différents secteurs et besoins.",
 
-        technologies: "Technologies",
+        technologies:
+          "Technologies",
 
         aboutProject:
           "À propos du projet",
 
-        visit: "Visiter le projet",
+        visit:
+          "Visiter le projet",
 
-        sourceCode: "Voir le code",
+        sourceCode:
+          "Voir le code",
 
         notFound:
           "Projet introuvable",
@@ -175,7 +216,8 @@ const translations = {
       },
 
       services: {
-        eyebrow: "MES SERVICES",
+        eyebrow:
+          "MES SERVICES",
 
         title:
           "Des solutions adaptées à vos besoins.",
@@ -246,9 +288,11 @@ const translations = {
         messagePlaceholder:
           "Décrivez votre projet...",
 
-        location: "Localisation",
+        location:
+          "Localisation",
 
-        send: "Envoyer le message",
+        send:
+          "Envoyer le message",
 
         sending:
           "Envoi en cours...",
@@ -272,16 +316,35 @@ const translations = {
       },
 
       admin: {
-        administration: "ADMINISTRATION",
-        dashboard: "Tableau de bord",
-        projects: "Projets",
-        services: "Services",
-        skills: "Compétences",
-        media: "Médias",
-        settings: "Paramètres",
-        security: "Sécurité",
-        logout: "Déconnexion",
-        portfolio: "Voir le portfolio",
+        administration:
+          "ADMINISTRATION",
+
+        dashboard:
+          "Tableau de bord",
+
+        projects:
+          "Projets",
+
+        services:
+          "Services",
+
+        skills:
+          "Compétences",
+
+        media:
+          "Médias",
+
+        settings:
+          "Paramètres",
+
+        security:
+          "Sécurité",
+
+        logout:
+          "Déconnexion",
+
+        portfolio:
+          "Voir le portfolio",
       },
     },
   },
@@ -301,68 +364,123 @@ const translations = {
       common: {
         loading: "Loading...",
         retry: "Retry",
+
+        errorTitle:
+          "An error occurred",
+
+        errorMessage:
+          "Unable to load the data. Please try again.",
+
         cancel: "Cancel",
         save: "Save",
         edit: "Edit",
         delete: "Delete",
         add: "Add",
         back: "Back",
-        viewProject: "View project",
-        viewAll: "View all",
-        contactMe: "Contact me",
+
+        viewProject:
+          "View project",
+
+        viewAll:
+          "View all",
+
+        contactMe:
+          "Contact me",
       },
 
       home: {
-        welcome: "WELCOME TO MY PORTFOLIO",
-        universe: "MY WORLD",
-        discover: "Discover more",
-        defaultRole: "Web & Mobile Developer",
+        welcome:
+          "WELCOME TO MY PORTFOLIO",
+
+        universe:
+          "MY WORLD",
+
+        discover:
+          "Discover more",
+
+        defaultRole:
+          "Web & Mobile Developer",
+
         defaultDescription:
           "I design modern, high-performance digital solutions tailored to business needs.",
+
         seoDescription:
           "Professional portfolio, projects and digital solutions.",
-        viewProjects: "View my projects",
+
+        viewProjects:
+          "View my projects",
+
         introTitle:
           "Digital experiences designed to last.",
+
         introDescription:
           "Discover my journey, skills and projects developed for different industries.",
-        learnMore: "Learn more",
+
+        learnMore:
+          "Learn more",
       },
 
       homeSections: {
         skills: {
-          eyebrow: "EXPERTISE",
-          title: "My skills",
+          eyebrow:
+            "EXPERTISE",
+
+          title:
+            "My skills",
+
           description:
             "The technologies I use to build modern digital solutions.",
-          viewAll: "View all my skills",
+
+          viewAll:
+            "View all my skills",
         },
 
         projects: {
-          eyebrow: "PROJECTS",
-          title: "Some projects",
+          eyebrow:
+            "PROJECTS",
+
+          title:
+            "Some projects",
+
           description:
             "Discover a selection of projects developed for different needs.",
+
           empty:
             "Projects will be available soon.",
-          viewAll: "View all projects",
+
+          viewAll:
+            "View all projects",
         },
 
         services: {
-          eyebrow: "SERVICES",
-          title: "What I offer",
+          eyebrow:
+            "SERVICES",
+
+          title:
+            "What I offer",
+
           description:
             "Digital services adapted to the objectives of your project.",
-          viewAll: "Discover all services",
+
+          viewAll:
+            "Discover all services",
         },
 
         links: {
-          eyebrow: "ONLINE",
-          title: "My projects on the web",
+          eyebrow:
+            "ONLINE",
+
+          title:
+            "My projects on the web",
+
           description:
             "Access the platforms and websites I have created directly.",
-          projectFallback: "Project",
-          openProject: "Open project",
+
+          projectFallback:
+            "Project",
+
+          openProject:
+            "Open project",
         },
       },
 
@@ -375,7 +493,8 @@ const translations = {
         description:
           "A journey focused on creating useful, modern and scalable digital solutions.",
 
-        journey: "MY JOURNEY",
+        journey:
+          "MY JOURNEY",
 
         greeting:
           "Hello, I am {{name}}.",
@@ -406,19 +525,25 @@ const translations = {
 
         features: {
           web: {
-            title: "Modern web",
+            title:
+              "Modern web",
+
             description:
               "Fast, elegant interfaces adapted to every screen.",
           },
 
           mobile: {
-            title: "Mobile solutions",
+            title:
+              "Mobile solutions",
+
             description:
               "Experiences designed for mobile users.",
           },
 
           technologies: {
-            title: "Technologies",
+            title:
+              "Technologies",
+
             description:
               "React, React Native, Python, JavaScript and related technologies.",
           },
@@ -426,7 +551,8 @@ const translations = {
       },
 
       projects: {
-        eyebrow: "MY PROJECTS",
+        eyebrow:
+          "MY PROJECTS",
 
         title:
           "Projects brought to life.",
@@ -434,14 +560,17 @@ const translations = {
         description:
           "Discover a selection of digital projects designed and developed with a modern approach.",
 
-        portfolio: "PORTFOLIO",
+        portfolio:
+          "PORTFOLIO",
 
-        titleList: "My projects",
+        titleList:
+          "My projects",
 
         listDescription:
           "A selection of projects from different industries and needs.",
 
-        technologies: "Technologies",
+        technologies:
+          "Technologies",
 
         aboutProject:
           "About the project",
@@ -466,7 +595,8 @@ const translations = {
       },
 
       services: {
-        eyebrow: "MY SERVICES",
+        eyebrow:
+          "MY SERVICES",
 
         title:
           "Solutions adapted to your needs.",
@@ -474,7 +604,8 @@ const translations = {
         description:
           "From design to development, I help you bring your digital projects to life.",
 
-        expertise: "EXPERTISE",
+        expertise:
+          "EXPERTISE",
 
         expertiseTitle:
           "What I can build for you",
@@ -482,7 +613,8 @@ const translations = {
         expertiseDescription:
           "Services designed to create modern, accessible and scalable digital products.",
 
-        pricing: "PRICING",
+        pricing:
+          "PRICING",
 
         pricingTitle:
           "Services adapted to your project",
@@ -495,7 +627,8 @@ const translations = {
       },
 
       contact: {
-        eyebrow: "CONTACT",
+        eyebrow:
+          "CONTACT",
 
         title:
           "Let's talk about your project.",
@@ -512,32 +645,38 @@ const translations = {
         stayInTouchDescription:
           "Tell me about your needs and we can discuss the next steps.",
 
-        name: "Name",
+        name:
+          "Name",
 
         namePlaceholder:
           "Your name",
 
-        email: "Email",
+        email:
+          "Email",
 
         emailPlaceholder:
           "your@email.com",
 
-        phone: "Phone",
+        phone:
+          "Phone",
 
         phonePlaceholder:
           "+221 ...",
 
-        subject: "Subject",
+        subject:
+          "Subject",
 
         subjectPlaceholder:
           "Subject of your request",
 
-        message: "Message",
+        message:
+          "Message",
 
         messagePlaceholder:
           "Describe your project...",
 
-        location: "Location",
+        location:
+          "Location",
 
         send:
           "Send message",
@@ -564,16 +703,35 @@ const translations = {
       },
 
       admin: {
-        administration: "ADMINISTRATION",
-        dashboard: "Dashboard",
-        projects: "Projects",
-        services: "Services",
-        skills: "Skills",
-        media: "Media",
-        settings: "Settings",
-        security: "Security",
-        logout: "Logout",
-        portfolio: "View portfolio",
+        administration:
+          "ADMINISTRATION",
+
+        dashboard:
+          "Dashboard",
+
+        projects:
+          "Projects",
+
+        services:
+          "Services",
+
+        skills:
+          "Skills",
+
+        media:
+          "Media",
+
+        settings:
+          "Settings",
+
+        security:
+          "Security",
+
+        logout:
+          "Logout",
+
+        portfolio:
+          "View portfolio",
       },
     },
   },
