@@ -1,17 +1,23 @@
 import { motion } from "framer-motion";
 
-const particles = Array.from({ length: 18 }, (_, index) => ({
-  id: index,
-  size: 2 + (index % 3),
-  left: `${(index * 37) % 100}%`,
-  top: `${(index * 61) % 100}%`,
-  duration: 4 + (index % 5),
-  delay: (index % 6) * 0.4,
-}));
+const particles = Array.from(
+  { length: 24 },
+  (_, index) => ({
+    id: index,
+    size: 2 + (index % 4),
+    left: `${(index * 37) % 100}%`,
+    top: `${(index * 61) % 100}%`,
+    duration: 4 + (index % 5),
+    delay: (index % 6) * 0.4,
+  })
+);
 
 export default function AnimatedBackground() {
   return (
-    <div className="animated-background" aria-hidden="true">
+    <div
+      className="animated-background"
+      aria-hidden="true"
+    >
       <motion.div
         className="animated-background__glow animated-background__glow--one"
         animate={{
@@ -40,6 +46,22 @@ export default function AnimatedBackground() {
         }}
       />
 
+      <motion.div
+        className="animated-background__glow animated-background__glow--three"
+        animate={{
+          x: [0, 25, -30, 0],
+          y: [0, 20, -25, 0],
+          scale: [1, 1.08, 0.92, 1],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <div className="animated-background__grid" />
+
       <div className="animated-background__particles">
         {particles.map((particle) => (
           <motion.span
@@ -54,6 +76,7 @@ export default function AnimatedBackground() {
             animate={{
               y: [0, -35, 0],
               opacity: [0.15, 0.8, 0.15],
+              scale: [1, 1.4, 1],
             }}
             transition={{
               duration: particle.duration,
