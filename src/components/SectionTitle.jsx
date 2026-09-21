@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import "./SectionTitle.css";
 
 export default function SectionTitle({
   eyebrow,
