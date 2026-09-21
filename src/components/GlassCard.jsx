@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import "./GlassCard.css";
 
 export default function GlassCard({
   children,
