@@ -1,354 +1,317 @@
 import api from "../../services/api";
 
 /**
-
-* =========================================================
-* AUTHENTIFICATION ADMIN
-* =========================================================
-  */
+ * =========================================================
+ * AUTHENTIFICATION ADMIN
+ * =========================================================
+ */
 
 /**
-
-* Connexion administrateur
-  */
-  export async function adminLogin(credentials) {
+ * Connexion administrateur
+ */
+export async function adminLogin(credentials) {
   const response = await api.post(
-  "/auth/login",
-  credentials
+    "/auth/login",
+    credentials
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Déconnexion administrateur
-  */
-  export async function adminLogout() {
+ * Déconnexion administrateur
+ */
+export async function adminLogout() {
   const response = await api.post(
-  "/auth/logout"
+    "/auth/logout"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Récupération de l'administrateur connecté
-  */
-  export async function getCurrentAdmin() {
+ * Récupération de l'administrateur connecté
+ */
+export async function getCurrentAdmin() {
   const response = await api.get(
-  "/auth/me"
+    "/auth/me"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* GESTION DES PROJETS
-* =========================================================
-* 
-* Le backend utilise :
-* 
-* GET    /api/projects
-* POST   /api/projects
-* PUT    /api/projects/:id
-* DELETE /api/projects/:id
-  */
+ * =========================================================
+ * GESTION DES PROJETS
+ * =========================================================
+ */
 
 /**
-
-* Liste des projets
-  */
-  export async function getAdminProjects() {
+ * Liste des projets
+ */
+export async function getAdminProjects() {
   const response = await api.get(
-  "/projects"
+    "/projects"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Création d'un projet
-  */
-  export async function createProject(data) {
+ * Création d'un projet
+ */
+export async function createProject(data) {
   const response = await api.post(
-  "/projects",
-  data
+    "/projects",
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Modification d'un projet
-  */
-  export async function updateProject(id, data) {
+ * Modification d'un projet
+ */
+export async function updateProject(id, data) {
   const response = await api.put(
-  "/projects/${id}",
-  data
+    `/projects/${id}`,
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Suppression d'un projet
-  */
-  export async function deleteProject(id) {
+ * Suppression d'un projet
+ */
+export async function deleteProject(id) {
   const response = await api.delete(
-  "/projects/${id}"
+    `/projects/${id}`
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* GESTION DES COMPÉTENCES
-* =========================================================
-  */
+ * =========================================================
+ * GESTION DES COMPÉTENCES
+ * =========================================================
+ */
 
 /**
-
-* Liste des compétences
-  */
-  export async function getAdminSkills() {
+ * Liste des compétences
+ */
+export async function getAdminSkills() {
   const response = await api.get(
-  "/skills"
+    "/skills"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Création d'une compétence
-  */
-  export async function createSkill(data) {
+ * Création d'une compétence
+ */
+export async function createSkill(data) {
   const response = await api.post(
-  "/skills",
-  data
+    "/skills",
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Modification d'une compétence
-  */
-  export async function updateSkill(id, data) {
+ * Modification d'une compétence
+ */
+export async function updateSkill(id, data) {
   const response = await api.put(
-  "/skills/${id}",
-  data
+    `/skills/${id}`,
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Suppression d'une compétence
-  */
-  export async function deleteSkill(id) {
+ * Suppression d'une compétence
+ */
+export async function deleteSkill(id) {
   const response = await api.delete(
-  "/skills/${id}"
+    `/skills/${id}`
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* GESTION DES SERVICES
-* =========================================================
-  */
+ * =========================================================
+ * GESTION DES SERVICES
+ * =========================================================
+ */
 
 /**
-
-* Liste des services
-  */
-  export async function getAdminServices() {
+ * Liste des services
+ */
+export async function getAdminServices() {
   const response = await api.get(
-  "/services"
+    "/services"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Création d'un service
-  */
-  export async function createService(data) {
+ * Création d'un service
+ */
+export async function createService(data) {
   const response = await api.post(
-  "/services",
-  data
+    "/services",
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Modification d'un service
-  */
-  export async function updateService(id, data) {
+ * Modification d'un service
+ */
+export async function updateService(id, data) {
   const response = await api.put(
-  "/services/${id}",
-  data
+    `/services/${id}`,
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Suppression d'un service
-  */
-  export async function deleteService(id) {
+ * Suppression d'un service
+ */
+export async function deleteService(id) {
   const response = await api.delete(
-  "/services/${id}"
+    `/services/${id}`
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* PROFIL
-* =========================================================
-  */
+ * =========================================================
+ * PROFIL
+ * =========================================================
+ */
 
 /**
-
-* Modification du profil
-  */
-  export async function updateProfile(data) {
+ * Modification du profil
+ */
+export async function updateProfile(data) {
   const response = await api.put(
-  "/profile",
-  data
+    "/profile",
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* PARAMÈTRES
-* =========================================================
-  */
+ * =========================================================
+ * PARAMÈTRES
+ * =========================================================
+ */
 
 /**
-
-* Liste des paramètres administrateur
-  */
-  export async function getAdminSettings() {
+ * Liste des paramètres administrateur
+ */
+export async function getAdminSettings() {
   const response = await api.get(
-  "/settings"
+    "/settings"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Modification des paramètres
-  */
-  export async function updateSettings(data) {
+ * Modification des paramètres
+ */
+export async function updateSettings(data) {
   const response = await api.put(
-  "/settings",
-  data
+    "/settings",
+    data
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* MÉDIAS / CLOUDINARY
-* =========================================================
-  */
+ * =========================================================
+ * MÉDIAS / CLOUDINARY
+ * =========================================================
+ */
 
 /**
-
-* Upload d'un média
-* 
-* Ne pas définir manuellement Content-Type.
-* Axios doit générer automatiquement :
-* 
-* multipart/form-data; boundary=...
-* 
-* Le token CSRF est ajouté automatiquement
-* par l'intercepteur de src/services/api.js.
-  */
-  export async function uploadMedia(formData) {
+ * Upload d'un média
+ *
+ * Ne pas définir manuellement Content-Type.
+ * Axios doit générer automatiquement :
+ *
+ * multipart/form-data; boundary=...
+ *
+ * Le token CSRF est ajouté automatiquement
+ * par l'intercepteur de src/services/api.js.
+ */
+export async function uploadMedia(formData) {
   const response = await api.post(
-  "/media/upload",
-  formData
+    "/media/upload",
+    formData
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Liste des médias
-  */
-  export async function getAdminMedia() {
+ * Liste des médias
+ */
+export async function getAdminMedia() {
   const response = await api.get(
-  "/media"
+    "/media"
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* Suppression logique d'un média
-  */
-  export async function deleteMedia(id) {
+ * Suppression logique d'un média
+ */
+export async function deleteMedia(id) {
   const response = await api.delete(
-  "/media/${id}"
+    `/media/${id}`
   );
 
-return response.data;
+  return response.data;
 }
 
 /**
-
-* =========================================================
-* AUDIT / SÉCURITÉ
-* =========================================================
-  */
+ * =========================================================
+ * AUDIT / SÉCURITÉ
+ * =========================================================
+ */
 
 /**
-
-* Liste des journaux d'audit
-* 
-* Backend :
-* GET /api/audit
-  */
-  export async function getAuditLogs(
+ * Liste des journaux d'audit
+ *
+ * Backend :
+ * GET /api/audit
+ */
+export async function getAuditLogs(
   params = {}
-  ) {
+) {
   const response = await api.get(
-  "/audit",
-  {
-  params,
-  }
+    "/audit",
+    {
+      params,
+    }
   );
 
-return response.data;
-  }
+  return response.data;
+}
