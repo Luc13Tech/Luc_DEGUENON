@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 
@@ -7,6 +8,8 @@ export default function ProjectCard({
   project,
   index = 0,
 }) {
+  const [imageError, setImageError] = useState(false);
+
   if (!project) {
     return null;
   }
@@ -17,6 +20,13 @@ export default function ProjectCard({
     description,
     image,
     imageUrl,
+    imageURL,
+    coverImage,
+    cover,
+    thumbnail,
+    featuredImage,
+    photo,
+    images,
     category,
     technologies = [],
     url,
@@ -30,20 +40,82 @@ export default function ProjectCard({
     name ||
     "Projet";
 
-  const projectImage =
-    image?.url ||
+  /*
+   * Récupération robuste de l'URL de l'image.
+   */
+
+  let projectImage = null;
+
+  // image = { url: "..." }
+  if (
+    image &&
+    typeof image === "object" &&
+    !Array.isArray(image)
+  ) {
+    projectImage =
+      image.url ||
+      image.secure_url ||
+      image.src ||
+      image.path ||
+      null;
+  }
+
+  // image = "https://..."
+  if (!projectImage && typeof image === "string") {
+    projectImage = image;
+  }
+
+  // Autres champs possibles
+  projectImage =
+    projectImage ||
     imageUrl ||
-    image;
+    imageURL ||
+    coverImage ||
+    cover ||
+    thumbnail ||
+    featuredImage ||
+    photo ||
+    null;
+
+  /*
+   * Si le backend utilise images[]
+   */
+  if (!projectImage && Array.isArray(images)) {
+    const firstImage = images.find(Boolean);
+
+    if (typeof firstImage === "string") {
+      projectImage = firstImage;
+    } else if (
+      firstImage &&
+      typeof firstImage === "object"
+    ) {
+      projectImage =
+        firstImage.url ||
+        firstImage.secure_url ||
+        firstImage.src ||
+        firstImage.path ||
+        null;
+    }
+  }
 
   const websiteUrl =
     liveUrl ||
     url ||
-    website;
+    website ||
+    null;
 
   const projectTechnologies =
     Array.isArray(technologies)
       ? technologies.filter(Boolean)
       : [];
+
+  /*
+   * Vérification simple de l'URL.
+   */
+  const validImage =
+    typeof projectImage === "string" &&
+    projectImage.trim().length > 0 &&
+    !imageError;
 
   return (
     <motion.div
@@ -66,13 +138,27 @@ export default function ProjectCard({
       }}
     >
       <GlassCard className="project-card">
+
+        {/* =========================
+            IMAGE DU PROJET
+        ========================== */}
         <div className="project-card__image-wrapper">
-          {projectImage ? (
+
+          {validImage ? (
             <motion.img
               src={projectImage}
               alt={projectTitle}
               className="project-card__image"
               loading="lazy"
+              decoding="async"
+              onError={() => {
+                console.error(
+                  "❌ Image du projet impossible à charger :",
+                  projectImage
+                );
+
+                setImageError(true);
+              }}
               whileHover={{
                 scale: 1.05,
               }}
@@ -83,7 +169,7 @@ export default function ProjectCard({
           ) : (
             <div
               className="project-card__image-placeholder"
-              aria-label={projectTitle}
+              aria-label={`Image indisponible pour ${projectTitle}`}
             >
               <span>LD</span>
             </div>
@@ -96,7 +182,11 @@ export default function ProjectCard({
           )}
         </div>
 
+        {/* =========================
+            CONTENU
+        ========================== */}
         <div className="project-card__content">
+
           <h3 className="project-card__title">
             {projectTitle}
           </h3>
@@ -107,6 +197,9 @@ export default function ProjectCard({
             </p>
           )}
 
+          {/* =========================
+              TECHNOLOGIES
+          ========================== */}
           {projectTechnologies.length > 0 && (
             <div className="project-card__technologies">
               {projectTechnologies.map(
@@ -115,15 +208,23 @@ export default function ProjectCard({
                     key={`${technology}-${technologyIndex}`}
                     className="project-card__technology"
                   >
-                    {technology}
+                    {typeof technology === "object"
+                      ? technology.name ||
+                        technology.title ||
+                        ""
+                      : technology}
                   </span>
                 )
               )}
             </div>
           )}
 
+          {/* =========================
+              LIENS
+          ========================== */}
           {(websiteUrl || githubUrl) && (
             <div className="project-card__actions">
+
               {websiteUrl && (
                 <a
                   href={websiteUrl}
@@ -149,8 +250,10 @@ export default function ProjectCard({
                   <span>GitHub</span>
                 </a>
               )}
+
             </div>
           )}
+
         </div>
       </GlassCard>
     </motion.div>
