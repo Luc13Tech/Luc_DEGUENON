@@ -3,45 +3,73 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+
+import Logo from "./Logo";
+import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
+
 import "./Navbar.css";
 
 const navigation = [
-  { key: "home", path: "/" },
-  { key: "about", path: "/about" },
-  { key: "projects", path: "/projects" },
-  { key: "services", path: "/services" },
-  { key: "contact", path: "/contact" },
+  {
+    key: "home",
+    path: "/",
+  },
+  {
+    key: "about",
+    path: "/about",
+  },
+  {
+    key: "projects",
+    path: "/projects",
+  },
+  {
+    key: "services",
+    path: "/services",
+  },
+  {
+    key: "contact",
+    path: "/contact",
+  },
 ];
 
 export default function Navbar() {
   const { t } = useTranslation();
+
   const [open, setOpen] = useState(false);
 
-  const closeMenu = () => setOpen(false);
+  const closeMenu = () => {
+    setOpen(false);
+  };
 
   return (
     <header className="navbar">
       <div className="navbar__inner">
+
+        {/* LOGO */}
         <Link
           to="/"
           className="navbar__logo"
           onClick={closeMenu}
           aria-label="Luc DEGUENON - Accueil"
         >
-          <span className="navbar__logo-mark">LD</span>
-          <span className="navbar__logo-text">
-            Luc DEGUENON
-          </span>
+          <Logo />
         </Link>
 
-        <nav className="navbar__desktop" aria-label="Navigation principale">
+        {/* DESKTOP NAVIGATION */}
+        <nav
+          className="navbar__desktop"
+          aria-label="Navigation principale"
+        >
           {navigation.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
                 `navbar__link ${
-                  isActive ? "navbar__link--active" : ""
+                  isActive
+                    ? "navbar__link--active"
+                    : ""
                 }`
               }
             >
@@ -50,28 +78,57 @@ export default function Navbar() {
           ))}
         </nav>
 
+        {/* DESKTOP CONTROLS */}
+        <div className="navbar__controls">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
+
+        {/* MOBILE BUTTON */}
         <button
           type="button"
           className="navbar__toggle"
-          onClick={() => setOpen((value) => !value)}
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          onClick={() =>
+            setOpen((value) => !value)
+          }
+          aria-label={
+            open
+              ? "Fermer le menu"
+              : "Ouvrir le menu"
+          }
           aria-expanded={open}
           aria-controls="mobile-navigation"
         >
-          {open ? <X size={25} /> : <Menu size={25} />}
+          {open ? (
+            <X size={25} />
+          ) : (
+            <Menu size={25} />
+          )}
         </button>
       </div>
 
+      {/* MOBILE NAVIGATION */}
       <AnimatePresence>
         {open && (
           <motion.nav
             id="mobile-navigation"
             className="navbar__mobile"
             aria-label="Navigation mobile"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{
+              opacity: 0,
+              height: 0,
+            }}
+            animate={{
+              opacity: 1,
+              height: "auto",
+            }}
+            exit={{
+              opacity: 0,
+              height: 0,
+            }}
+            transition={{
+              duration: 0.25,
+            }}
           >
             {navigation.map((item) => (
               <NavLink
@@ -89,6 +146,12 @@ export default function Navbar() {
                 {t(`nav.${item.key}`)}
               </NavLink>
             ))}
+
+            {/* MOBILE CONTROLS */}
+            <div className="navbar__mobile-controls">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>
