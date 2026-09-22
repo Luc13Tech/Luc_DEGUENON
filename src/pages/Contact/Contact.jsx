@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   Mail,
   Phone,
-  MapPin,
+  MessageCircle,
   Send,
   CheckCircle,
 } from "lucide-react";
@@ -15,6 +15,9 @@ import Button from "../../components/Button";
 import SEO from "../../components/SEO";
 import api from "../../services/api";
 import "./Contact.css";
+
+const PHONE_NUMBER = "+229 01 59 60 95 81";
+const WHATSAPP_NUMBER = "2290159609581";
 
 export default function Contact({ profile }) {
   const { t } = useTranslation();
@@ -35,11 +38,9 @@ export default function Contact({ profile }) {
     profile?.email ||
     "contact@lucdeguenon.com";
 
-  const phone = profile?.phone || "";
-
-  const location =
-    profile?.location ||
-    t("contact.location");
+  const phone =
+    profile?.phone ||
+    PHONE_NUMBER;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -91,6 +92,10 @@ export default function Contact({ profile }) {
       />
 
       <main className="contact-page">
+
+        {/* =========================
+            HERO
+        ========================== */}
         <section className="page-hero">
           <Container>
             <motion.div
@@ -121,9 +126,16 @@ export default function Contact({ profile }) {
           </Container>
         </section>
 
+        {/* =========================
+            CONTENU CONTACT
+        ========================== */}
         <section className="contact-page__content">
           <Container>
             <div className="contact-page__grid">
+
+              {/* =========================
+                  INFORMATIONS
+              ========================== */}
               <motion.div
                 className="contact-page__info"
                 initial={{
@@ -155,6 +167,10 @@ export default function Contact({ profile }) {
                 />
 
                 <div className="contact-details">
+
+                  {/* =========================
+                      EMAIL
+                  ========================== */}
                   <a
                     href={`mailto:${email}`}
                     className="contact-detail"
@@ -177,33 +193,18 @@ export default function Contact({ profile }) {
                     </span>
                   </a>
 
-                  {phone && (
-                    <a
-                      href={`tel:${phone}`}
-                      className="contact-detail"
-                    >
-                      <span className="contact-detail__icon">
-                        <Phone
-                          size={21}
-                          aria-hidden="true"
-                        />
-                      </span>
-
-                      <span>
-                        <strong>
-                          {t("contact.phone")}
-                        </strong>
-
-                        <small>
-                          {phone}
-                        </small>
-                      </span>
-                    </a>
-                  )}
-
-                  <div className="contact-detail">
+                  {/* =========================
+                      APPEL TÉLÉPHONIQUE
+                  ========================== */}
+                  <a
+                    href={`tel:${PHONE_NUMBER.replace(
+                      /\s+/g,
+                      ""
+                    )}`}
+                    className="contact-detail"
+                  >
                     <span className="contact-detail__icon">
-                      <MapPin
+                      <Phone
                         size={21}
                         aria-hidden="true"
                       />
@@ -211,19 +212,49 @@ export default function Contact({ profile }) {
 
                     <span>
                       <strong>
-                        {t(
-                          "contact.location"
-                        )}
+                        {t("contact.phone")}
                       </strong>
 
                       <small>
-                        {location}
+                        {phone}
                       </small>
                     </span>
-                  </div>
+                  </a>
+
+                  {/* =========================
+                      WHATSAPP
+                  ========================== */}
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-detail"
+                    aria-label="Contacter Luc DEGUENON sur WhatsApp"
+                  >
+                    <span className="contact-detail__icon">
+                      <MessageCircle
+                        size={21}
+                        aria-hidden="true"
+                      />
+                    </span>
+
+                    <span>
+                      <strong>
+                        WhatsApp
+                      </strong>
+
+                      <small>
+                        +229 01 59 60 95 81
+                      </small>
+                    </span>
+                  </a>
+
                 </div>
               </motion.div>
 
+              {/* =========================
+                  FORMULAIRE
+              ========================== */}
               <motion.div
                 className="contact-page__form-wrapper"
                 initial={{
@@ -245,7 +276,10 @@ export default function Contact({ profile }) {
                   className="contact-form"
                   onSubmit={handleSubmit}
                 >
+
+                  {/* NOM + EMAIL */}
                   <div className="contact-form__row">
+
                     <label>
                       {t("contact.name")}
 
@@ -277,9 +311,12 @@ export default function Contact({ profile }) {
                         required
                       />
                     </label>
+
                   </div>
 
+                  {/* TÉLÉPHONE + SUJET */}
                   <div className="contact-form__row">
+
                     <label>
                       {t("contact.phone")}
 
@@ -309,8 +346,10 @@ export default function Contact({ profile }) {
                         required
                       />
                     </label>
+
                   </div>
 
+                  {/* MESSAGE */}
                   <label>
                     {t("contact.message")}
 
@@ -326,6 +365,7 @@ export default function Contact({ profile }) {
                     />
                   </label>
 
+                  {/* SUCCÈS */}
                   {success && (
                     <div
                       className="contact-form__success"
@@ -342,6 +382,7 @@ export default function Contact({ profile }) {
                     </div>
                   )}
 
+                  {/* ERREUR */}
                   {error && (
                     <div
                       className="contact-form__error"
@@ -351,6 +392,7 @@ export default function Contact({ profile }) {
                     </div>
                   )}
 
+                  {/* BOUTON */}
                   <Button
                     type="submit"
                     disabled={loading}
@@ -360,11 +402,14 @@ export default function Contact({ profile }) {
                       ? t("contact.sending")
                       : t("contact.send")}
                   </Button>
+
                 </form>
               </motion.div>
+
             </div>
           </Container>
         </section>
+
       </main>
     </>
   );
