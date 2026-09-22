@@ -15,7 +15,14 @@ import Container from "../../components/Container";
 import Button from "../../components/Button";
 import SEO from "../../components/SEO";
 
-import { adminLogin } from "../services/adminApi";
+import {
+  adminLogin,
+} from "../services/adminApi";
+
+import {
+  initializeCsrf,
+} from "../../services/api";
+
 import "./AdminLogin.css";
 
 export default function AdminLogin({
@@ -76,6 +83,12 @@ export default function AdminLogin({
     setError("");
 
     try {
+      /*
+       * Initialisation du token CSRF
+       * avant toute tentative de connexion.
+       */
+      await initializeCsrf();
+
       const data =
         await adminLogin({
           email,
@@ -103,35 +116,79 @@ export default function AdminLogin({
         replace: true,
       });
     } catch (err) {
+      const status =
+        err?.response?.status;
+
       const apiMessage =
         err?.response?.data?.message ||
         err?.response?.data?.error;
 
-      if (
-        err?.response?.status === 401 ||
-        err?.response?.status === 403
-      ) {
+      /*
+       * 401 = identifiants incorrects
+       */
+      if (status === 401) {
         setError(
-          "Email ou mot de passe incorrect."
+          apiMessage ||
+            "Email ou mot de passe incorrect."
         );
-      } else if (
+
+        return;
+      }
+
+      /*
+       * 403 = problème CSRF ou accès refusé.
+       * On ne doit surtout pas afficher
+       * "mot de passe incorrect" dans ce cas.
+       */
+      if (status === 403) {
+        setError(
+          apiMessage ||
+            "Connexion refusée par la protection de sécurité. Veuillez actualiser la page puis réessayer."
+        );
+
+        return;
+      }
+
+      /*
+       * 423 = compte temporairement verrouillé.
+       */
+      if (status === 423) {
+        setError(
+          apiMessage ||
+            "Compte temporairement verrouillé. Veuillez réessayer plus tard."
+        );
+
+        return;
+      }
+
+      /*
+       * Erreur serveur ou autre réponse API.
+       */
+      if (
         typeof apiMessage === "string" &&
         apiMessage.trim()
       ) {
         setError(
           apiMessage.trim()
         );
-      } else if (
-        err?.request
-      ) {
+
+        return;
+      }
+
+      /*
+       * Le serveur n'a pas répondu.
+       */
+      if (err?.request) {
         setError(
           "Impossible de contacter le serveur. Vérifiez votre connexion puis réessayez."
         );
-      } else {
-        setError(
-          "Une erreur est survenue. Veuillez réessayer."
-        );
+
+        return;
       }
+
+      setError(
+        "Une erreur est survenue. Veuillez réessayer."
+      );
     } finally {
       setLoading(false);
     }
